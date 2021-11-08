@@ -1,17 +1,17 @@
-/*import 'package:cookie/ui/screens/auth_screen.dart';
+import 'package:cookie/ui/screens/auth_screen.dart';
 import 'package:cookie/ui/screens/profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LoadingScreen extends StatefulWidget {
-  const LoadingScreen({Key? key}) : super(key: key);
+class IntroScreen extends StatefulWidget {
+  const IntroScreen({Key? key}) : super(key: key);
 
   @override
-  _LoadingScreenState createState() => _LoadingScreenState();
+  _IntroScreenState createState() => _IntroScreenState();
 }
 
-class _LoadingScreenState extends State<LoadingScreen> {
+class _IntroScreenState extends State<IntroScreen> {
   @override
   void initState() {
     super.initState();
@@ -24,16 +24,16 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
     result != null
         ? Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder:
-                (context) => ProfileScreen(),),)
+      context,
+      MaterialPageRoute(
+        builder:
+            (context) => ProfileScreen(uid: result.uid),),)
 
         : Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder:
-            (context) => ProfileScreen(),),);
+            (context) => const AuthScreen(),),);
   }
 
   @override
@@ -46,7 +46,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image:
-                    AssetImage("assets/images/background_loading_screen.png"),
+                AssetImage("assets/images/background_loading_screen.png"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -91,4 +91,3 @@ class _LoadingScreenState extends State<LoadingScreen> {
     );
   }
 }
-*/

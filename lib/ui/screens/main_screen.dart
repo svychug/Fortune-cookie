@@ -1,4 +1,4 @@
-import 'package:cookie/ui/screens/login_screen.dart';
+/*import 'package:cookie/ui/screens/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -86,7 +86,7 @@ class _MainScreenState extends State<MainScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) {
-                                return const LoginScreen();
+                                return const AuthScreen();
                               }),
                             );
                           },
@@ -103,7 +103,7 @@ class _MainScreenState extends State<MainScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) {
-                                return const LoginScreen();
+                                return AuthScreen();
                               }),
                             );
                           },
@@ -142,3 +142,5 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 }
+*/
+

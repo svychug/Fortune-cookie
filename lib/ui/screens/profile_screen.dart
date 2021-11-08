@@ -1,14 +1,45 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cookie/ui/screens/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({Key? key, this.uid}) : super(key: key);
+
+  final String? uid;
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  String fullName = '';
+  String email = '';
+
+  Future fetchData() async {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.uid!)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        final Map<String, dynamic> map =
+            documentSnapshot.data() as Map<String, dynamic>;
+        setState(() {
+          fullName = map['first_name'] + ' ' + map['last_name'];
+          email = map['email'];
+        });
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,22 +95,69 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 size: 36,
               ),
               onPressed: () {
-                Navigator.pop(context);
+                FirebaseAuth auth = FirebaseAuth.instance;
+                auth.signOut().then((res) {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AuthScreen()),
+                      (Route<dynamic> route) => false);
+                });
               },
             ),
           ),
-          Positioned(
+          const Positioned(
             top: 150,
             left: 170,
-            child: IconButton(
-              icon: const Icon(
-                Icons.perm_identity,
-                color: Colors.pink,
-                size: 50,
+            child: Icon(
+              Icons.perm_identity,
+              color: Colors.pink,
+              size: 50,
+            ),
+          ),
+          Positioned(
+            top: 200,
+            left: 80,
+            child: Text(
+              fullName,
+              style: GoogleFonts.alata(
+                color: Color(0xFF000000),
+                fontSize: 18,
               ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
+            ),
+          ),
+          Positioned(
+            top: 250,
+            left: 80,
+            child: Text(
+              email,
+              style: GoogleFonts.alata(
+                color: Color(0xFF000000),
+                fontSize: 18,
+              ),
+            ),
+          ),
+          Positioned(
+            top: 600,
+            left: 150,
+            child: TextButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.pink),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                  ),
+                ),
+              ),
+              onPressed: () {},
+              child: Text(
+                "PREDICTION",
+                style: GoogleFonts.roboto(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 18,
+                ),
+              ),
             ),
           ),
         ],

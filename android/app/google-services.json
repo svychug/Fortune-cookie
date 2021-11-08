@@ -1,37 +1,37 @@
 {
   "project_info": {
-    "project_number": "646145183261",
-    "project_id": "fortune-cookie-3e487",
-    "storage_bucket": "fortune-cookie-3e487.appspot.com"
+    "project_number": "444385613142",
+    "project_id": "fortune-cookie-523b8",
+    "storage_bucket": "fortune-cookie-523b8.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:646145183261:android:046715510ca1d54820c0f4",
+        "mobilesdk_app_id": "1:444385613142:android:f19616e96351fa6a4572f7",
         "android_client_info": {
           "package_name": "com.fortune.cookie"
         }
       },
       "oauth_client": [
         {
-          "client_id": "646145183261-0s0mq1bmb9m9mpoh22co2a856lpsa623.apps.googleusercontent.com",
+          "client_id": "444385613142-aoh5hivgfl36ff5j3sb3hl0pbmuvn2m6.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCC4SKnW0OEYRB0MSPyCOcao8J_S9f6vpA"
+          "current_key": "AIzaSyAYjb3rPWYhmTUuwzpJJDQuS49nT6k3Im8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "646145183261-0s0mq1bmb9m9mpoh22co2a856lpsa623.apps.googleusercontent.com",
+              "client_id": "444385613142-aoh5hivgfl36ff5j3sb3hl0pbmuvn2m6.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "646145183261-v9q6e5lrfe4aq8tdd3mdui1uo111kccj.apps.googleusercontent.com",
+              "client_id": "444385613142-f4l8ir4tg3sd0oqp4sf7ttp097mlns50.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.fortune.cookie"

@@ -1,4 +1,4 @@
-import 'package:cookie/ui/screens/profile_screen.dart';
+import 'package:cookie/ui/screens/user_settings_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -207,7 +207,7 @@ class _SignUpFormState extends State<SignUpForm> {
         isLoading = false;
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => ProfileScreen(uid: result.user!.uid)),
+          MaterialPageRoute(builder: (context) => UserSettingsScreen(uid: result.user!.uid)),
         );
     }).catchError((err) {
       showDialog(

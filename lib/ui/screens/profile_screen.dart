@@ -1,311 +1,218 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cookie/ui/screens/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key, this.uid}) : super(key: key);
-
-  final String? uid;
+  const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  late Future<bool> _webCall;
-
-  late final String firstName;
-  late final String lastName;
-  late final String email;
-
-  Future<bool> fetchData() async {
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(widget.uid!)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      if (documentSnapshot.exists) {
-        final Map<String, dynamic> map =
-            documentSnapshot.data() as Map<String, dynamic>;
-        setState(() {
-          firstName = map['first_name'];
-          lastName = map['last_name'];
-          email = map['email'];
-        });
-      }
-    });
-    return true;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _webCall = fetchData();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(
-        future: _webCall,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            return Stack(
+      body: Column(
+        children: [
+          SizedBox(
+            height: 200,
+            width: double.infinity,
+            child: Stack(
               children: [
-                Container(
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(
-                          "assets/images/background_profile_screen.png"),
-                      fit: BoxFit.cover,
+                Positioned(
+                  top: 80,
+                  left: 120,
+                  child: Text(
+                    "Fortune",
+                    style: GoogleFonts.vollkornSc(
+                      color: Theme.of(context).primaryColor,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
                     ),
+                  ),
+                ),
+                Positioned(
+                  top: 100,
+                  left: 185,
+                  child: Text(
+                    "Cookie",
+                    style: GoogleFonts.vollkornSc(
+                      color: Theme.of(context).primaryColor,
+                      fontSize: 35,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 100,
+                  child: IconButton(
+                      icon: const Icon(
+                        Icons.format_list_bulleted,
+                        color: Color(0xFFFEC480),
+                        size: 40,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      }),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            "free cookie:",
+                            style: GoogleFonts.roboto(
+                              color: Colors.pink,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            "12ч:10м:53c",
+                            style: GoogleFonts.roboto(
+                              color: Color(0xFFFEC480),
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10,),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          width: 200,
+                          child: const LinearProgressIndicator(
+                            minHeight: 7,
+                            value: 0.5,
+                            valueColor: AlwaysStoppedAnimation<Color>(Colors.pink),
+                            backgroundColor: Colors.grey,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Column(
                   children: [
-                    SizedBox(
-                      height: 160,
-                      width: double.infinity,
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            top: 80,
-                            left: 100,
+                    Row(
+                      children: [
+                        Container(
+                          width: 50,
+                          height: 50,
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image:
+                                  AssetImage("assets/images/little_cookie.png"),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            border: Border.all(width: 1, color: Colors.pink),
+                            shape: BoxShape.circle,
+                            color: Colors.white,
+                          ),
+                          child: Center(
                             child: Text(
-                              "Fortune",
-                              style: GoogleFonts.vollkornSc(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            top: 100,
-                            left: 165,
-                            child: Text(
-                              "Cookie",
-                              style: GoogleFonts.vollkornSc(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 35,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            top: 120,
-                            child: IconButton(
-                              icon: const Icon(
-                                Icons.arrow_back,
-                                color: Colors.pink,
-                                size: 36,
-                              ),
-                              onPressed: () {
-                                FirebaseAuth auth = FirebaseAuth.instance;
-                                auth.signOut().then((res) {
-                                  Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const AuthScreen()),
-                                      (Route<dynamic> route) => false);
-                                });
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const Icon(
-                      Icons.perm_identity,
-                      color: Colors.pink,
-                      size: 50,
-                    ),
-                    SizedBox(
-                      height: 80,
-                      width: 80,
-                      child: Stack(
-                        children: [
-                          Align(
-                            alignment: Alignment.center,
-                            child: Container(
-                              width: 70,
-                              height: 70,
-                              decoration: BoxDecoration(
-                                border:
-                                    Border.all(width: 1, color: Colors.pink),
-                                shape: BoxShape.circle,
-                                color: Colors.black,
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text(
-                                    firstName[0].toUpperCase() +
-                                        lastName[0].toUpperCase(),
-                                    style: GoogleFonts.roboto(
-                                      color: Colors.pink,
-                                      fontSize: 26,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 50,
-                            child: Container(
-                              height: 20,
-                              width: 30,
-                              color: Colors.transparent,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.pink.shade400,
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(10.0),
-                                  ),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    "3",
-                                    style: GoogleFonts.roboto(
-                                      color: Colors.white,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        children: [
-                          Text(
-                            email,
-                            style: GoogleFonts.roboto(
-                              color: Colors.grey.shade500,
-                              fontSize: 20,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                          const Divider(
-                            thickness: 2,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                "Open predictions:",
-                                style: GoogleFonts.roboto(
-                                  fontSize: 16,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Container(
-                                width: 30,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  border:
-                                      Border.all(width: 1, color: Colors.pink),
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(10.0),
-                                  ),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text(
-                                      "2",
-                                      style: GoogleFonts.roboto(
-                                        color: Colors.pink,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          TextButton(
-                            style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all<Color>(Colors.pink),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0),
-                                ),
-                              ),
-                            ),
-                            onPressed: () {},
-                            child: Text(
-                              "+ ADD",
+                              "3",
                               style: GoogleFonts.roboto(
-                                color: Colors.white,
-                                fontSize: 18,
+                                color: Colors.pink,
                               ),
+                              textAlign: TextAlign.center,
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 200,
+                        ),
+                      ],
                     ),
                     TextButton(
                       style: ButtonStyle(
-                        padding: MaterialStateProperty.all(
-                          const EdgeInsets.only(
-                              left: 30, right: 30, top: 20, bottom: 20),
-                        ),
                         backgroundColor:
                             MaterialStateProperty.all<Color>(Colors.pink),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: BorderRadius.circular(18.0),
                           ),
                         ),
                       ),
                       onPressed: () {},
                       child: Text(
-                        "PREDICTION",
+                        "+ ADD",
                         style: GoogleFonts.roboto(
                           color: Colors.white,
-                          fontWeight: FontWeight.w900,
                           fontSize: 18,
                         ),
                       ),
                     ),
                   ],
-                )
+                ),
               ],
-            );
-          }
-        },
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Container(
+            width: double.infinity,
+            height: 320,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/cookie.png"),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          const SizedBox(height: 50,),
+          TextButton(
+            style: ButtonStyle(
+              padding: MaterialStateProperty.all(
+                const EdgeInsets.only(
+                    left: 30, right: 30, top: 10, bottom: 10),
+              ),
+              backgroundColor:
+              MaterialStateProperty.all<Color>(Colors.pink),
+              shape:
+              MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return Container();
+                }),
+              );
+            },
+            child: Text(
+              "VIEW \nPREDICTION",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.roboto(
+                color: Colors.white,
+                fontWeight: FontWeight.w900,
+                fontSize: 18,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

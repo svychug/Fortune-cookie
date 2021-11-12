@@ -61,6 +61,7 @@ flutter:
     - assets/images/blurred_cookie.png
     - assets/images/background_profile_screen.png
     - assets/images/little_cookie.png
+    - assets/images/background_buy_cookies_screen.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

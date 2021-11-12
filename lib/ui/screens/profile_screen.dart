@@ -1,4 +1,5 @@
 import 'package:cookie/ui/screens/buy_cookies_screen.dart';
+import 'package:cookie/ui/screens/view_prediction_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -201,13 +202,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
             ),
-            onPressed: () {/*
+            onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
-                  return Container();
+                  return const ViewPredictionScreen();
                 }),
-              );*/
+              );
             },
             child: Text(
               "VIEW \nPREDICTION",

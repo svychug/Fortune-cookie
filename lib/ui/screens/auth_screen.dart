@@ -11,7 +11,6 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,8 +74,8 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
                 body: const TabBarView(
                   children: [
-                    SignUpForm(),
-                    LoginForm(),
+                    Padding(padding: EdgeInsets.all(25), child: SignUpForm()),
+                    Padding(padding: EdgeInsets.all(25), child: LoginForm()),
                   ],
                 ),
               ),

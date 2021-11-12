@@ -1,4 +1,5 @@
 import 'package:cookie/ui/screens/buy_cookies_screen.dart';
+import 'package:cookie/ui/screens/share_cookie_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -77,13 +78,12 @@ class _ViewPredictionScreenState extends State<ViewPredictionScreen> {
               ),
             ),
             onPressed: () {
-              /*
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
-                  return Container();
+                  return const ShareCookieScreen();
                 }),
-              );*/
+              );
             },
             child: Text(
               "SHARE COOKIE",

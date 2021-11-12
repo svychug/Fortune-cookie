@@ -1,4 +1,4 @@
-import 'package:cookie/ui/screens/auth_screen.dart';
+import 'package:cookie/ui/screens/buy_cookies_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -151,7 +151,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) {
+                            return BuyCookiesScreen();
+                          }),
+                        );
+                      },
                       child: Text(
                         "+ ADD",
                         style: GoogleFonts.roboto(
@@ -194,13 +201,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
             ),
-            onPressed: () {
+            onPressed: () {/*
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
                   return Container();
                 }),
-              );
+              );*/
             },
             child: Text(
               "VIEW \nPREDICTION",

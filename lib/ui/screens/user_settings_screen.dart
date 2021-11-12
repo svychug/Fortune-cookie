@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'buy_cookies_screen.dart';
+
 class UserSettingsScreen extends StatefulWidget {
   const UserSettingsScreen({Key? key, this.uid}) : super(key: key);
 
@@ -261,7 +263,14 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
                                 ),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) {
+                                  return BuyCookiesScreen();
+                                }),
+                              );
+                            },
                             child: Text(
                               "+ ADD",
                               style: GoogleFonts.roboto(

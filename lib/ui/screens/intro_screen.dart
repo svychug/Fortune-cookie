@@ -20,7 +20,7 @@ class _IntroScreenState extends State<IntroScreen> {
 
   _navigateToHome() async {
     User? result = FirebaseAuth.instance.currentUser;
-    await Future.delayed(const Duration(seconds: 5), () {});
+    await Future.delayed(const Duration(seconds: 2), () {});
 
     result != null
         ? Navigator.pushReplacement(

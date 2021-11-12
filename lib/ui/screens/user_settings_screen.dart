@@ -105,7 +105,7 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
                             top: 120,
                             child: IconButton(
                               icon: const Icon(
-                                Icons.arrow_back,
+                                Icons.logout,
                                 color: Colors.pink,
                                 size: 36,
                               ),
@@ -125,11 +125,11 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
                         ],
                       ),
                     ),
-                    const Icon(
+                    /*const Icon(
                       Icons.perm_identity,
                       color: Colors.pink,
                       size: 50,
-                    ),
+                    ),*/
                     SizedBox(
                       height: 80,
                       width: 80,

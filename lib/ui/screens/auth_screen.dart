@@ -18,12 +18,12 @@ class _AuthScreenState extends State<AuthScreen> {
       body: Column(
         children: [
           SizedBox(
-            height: 150,
+            height: 100,
             width: double.infinity,
             child: Stack(
               children: [
                 Positioned(
-                  top: 80,
+                  top: 30,
                   left: 100,
                   child: Text(
                     "Fortune",
@@ -35,7 +35,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                 ),
                 Positioned(
-                  top: 100,
+                  top: 50,
                   left: 165,
                   child: Text(
                     "Cookie",
@@ -49,9 +49,7 @@ class _AuthScreenState extends State<AuthScreen> {
               ],
             ),
           ),
-          SizedBox(
-            height: 600,
-            width: double.infinity,
+          Expanded(
             child: DefaultTabController(
               length: 2,
               child: Scaffold(

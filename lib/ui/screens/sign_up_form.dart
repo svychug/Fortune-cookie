@@ -1,4 +1,4 @@
-import 'package:cookie/ui/screens/user_settings_screen.dart';
+import 'package:cookie/ui/screens/profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -43,152 +43,153 @@ class _SignUpFormState extends State<SignUpForm> {
         key: _formKeySignUp,
         height: 100,
         width: double.infinity,
-        child: Column(
-          children: [
-            TextFormField(
-              controller: firstNameController,
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                enabledBorder: const UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                focusedBorder: const UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                border: const UnderlineInputBorder(),
-                labelText: 'FIRST NAME',
-                labelStyle: GoogleFonts.roboto(
-                  color: Colors.white,
-                  fontSize: 18,
-                ),
-              ),
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Enter First Name';
-                }
-                return null;
-              },
-            ),
-            TextFormField(
-              controller: lastNameController,
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                enabledBorder: const UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                focusedBorder: const UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                border: const UnderlineInputBorder(),
-                labelText: 'LAST NAME',
-                labelStyle: GoogleFonts.roboto(
-                  color: Colors.white,
-                  fontSize: 18,
-                ),
-              ),
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Enter Last Name';
-                }
-                return null;
-              },
-            ),
-            TextFormField(
-              controller: emailController,
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                enabledBorder: const UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                focusedBorder: const UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                border: const UnderlineInputBorder(),
-                labelText: 'EMAIL',
-                labelStyle: GoogleFonts.roboto(
-                  color: Colors.white,
-                  fontSize: 18,
-                ),
-              ),
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Enter an Email Address';
-                } else if (!value.contains('@')) {
-                  return 'Please enter a valid email address';
-                } else if (!listDomains.contains(value.substring(value.indexOf('@'),value.length))){
-                  return 'Please enter a valid email domain';
-                } return null;
-              },
-            ),
-            TextFormField(
-              controller: passwordController,
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                enabledBorder: const UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                focusedBorder: const UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                border: const UnderlineInputBorder(),
-                labelText: 'PASSWORD',
-                hintStyle: const TextStyle(color: Colors.white),
-                hintText: 'Password is at least 6 characters',
-                labelStyle: GoogleFonts.roboto(
-                  color: Colors.white,
-                  fontSize: 18,
-                ),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    !_obscureText ? Icons.visibility : Icons.visibility_off,
-                    color: Colors.pink,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              TextFormField(
+                controller: firstNameController,
+                style: const TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  enabledBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
                   ),
-                  onPressed: _toggle,
+                  focusedBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                  border: const UnderlineInputBorder(),
+                  labelText: 'FIRST NAME',
+                  labelStyle: GoogleFonts.roboto(
+                    color: Colors.white,
+                    fontSize: 18,
+                  ),
                 ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Enter First Name';
+                  }
+                  return null;
+                },
               ),
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Enter Password';
-                } else if (value.length < 6) {
-                  return 'Password must be at least 6 characters!';
-                }
-                return null;
-              },
-              obscureText: _obscureText,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(50.0),
-              child: SizedBox(
-                height: 40,
-                width: 150,
-                child: isLoading
-                    ? const CircularProgressIndicator()
-                    : TextButton(
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.pink),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
+              TextFormField(
+                controller: lastNameController,
+                style: const TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  enabledBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                  focusedBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                  border: const UnderlineInputBorder(),
+                  labelText: 'LAST NAME',
+                  labelStyle: GoogleFonts.roboto(
+                    color: Colors.white,
+                    fontSize: 18,
+                  ),
+                ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Enter Last Name';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: emailController,
+                style: const TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  enabledBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                  focusedBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                  border: const UnderlineInputBorder(),
+                  labelText: 'EMAIL',
+                  labelStyle: GoogleFonts.roboto(
+                    color: Colors.white,
+                    fontSize: 18,
+                  ),
+                ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Enter an Email Address';
+                  } else if (!value.contains('@')) {
+                    return 'Please enter a valid email address';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: passwordController,
+                style: const TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  enabledBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                  focusedBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                  border: const UnderlineInputBorder(),
+                  labelText: 'PASSWORD',
+                  hintStyle: const TextStyle(color: Colors.white),
+                  hintText: 'Password is at least 6 characters',
+                  labelStyle: GoogleFonts.roboto(
+                    color: Colors.white,
+                    fontSize: 18,
+                  ),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      !_obscureText ? Icons.visibility : Icons.visibility_off,
+                      color: Colors.pink,
+                    ),
+                    onPressed: _toggle,
+                  ),
+                ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Enter Password';
+                  } else if (value.length < 6) {
+                    return 'Password must be at least 6 characters!';
+                  }
+                  return null;
+                },
+                obscureText: _obscureText,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(50.0),
+                child: SizedBox(
+                  height: 40,
+                  width: 150,
+                  child: isLoading
+                      ? const CircularProgressIndicator()
+                      : TextButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.pink),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            registerToFirebase();
+                          },
+                          child: Text(
+                            "SIGN UP",
+                            style: GoogleFonts.roboto(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 18,
                             ),
                           ),
                         ),
-                        onPressed: () {
-                          registerToFirebase();
-                        },
-                        child: Text(
-                          "SIGN UP",
-                          style: GoogleFonts.roboto(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w900,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -210,8 +211,7 @@ class _SignUpFormState extends State<SignUpForm> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (context) =>
-                    UserSettingsScreen(uid: result.user!.uid)),
+                builder: (context) => ProfileScreen(uid: result.user!.uid)),
           );
         }).catchError(
           (err) {
@@ -219,7 +219,7 @@ class _SignUpFormState extends State<SignUpForm> {
               barrierLabel: "Label",
               barrierDismissible: true,
               barrierColor: Colors.black.withOpacity(0.5),
-              transitionDuration: Duration(milliseconds: 500),
+              transitionDuration: const Duration(milliseconds: 500),
               context: context,
               pageBuilder: (context, anim1, anim2) {
                 return Align(
@@ -229,15 +229,32 @@ class _SignUpFormState extends State<SignUpForm> {
                     child: AlertDialog(
                       content: Text(err.message),
                       actions: [
-                        ElevatedButton(
-                          child: const Text("Ok"),
+                        TextButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.pink),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                              ),
+                            ),
+                          ),
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                        )
+                          child: Text(
+                            "Ok",
+                            style: GoogleFonts.roboto(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
-                    margin: EdgeInsets.only(
+                    margin: const EdgeInsets.only(
                       left: 12,
                       right: 12,
                     ),
@@ -250,8 +267,9 @@ class _SignUpFormState extends State<SignUpForm> {
               },
               transitionBuilder: (context, anim1, anim2, child) {
                 return SlideTransition(
-                  position: Tween(begin: Offset(0, -1), end: Offset(0, 0))
-                      .animate(anim1),
+                  position:
+                      Tween(begin: const Offset(0, -1), end: const Offset(0, 0))
+                          .animate(anim1),
                   child: child,
                 );
               },

@@ -16,12 +16,12 @@ class _ShareCookieScreenState extends State<ShareCookieScreen> {
       body: Column(
         children: [
           SizedBox(
-            height: 200,
+            height: 100,
             width: double.infinity,
             child: Stack(
               children: [
                 Positioned(
-                  top: 80,
+                  top: 30,
                   left: 100,
                   child: Text(
                     "Fortune",
@@ -33,7 +33,7 @@ class _ShareCookieScreenState extends State<ShareCookieScreen> {
                   ),
                 ),
                 Positioned(
-                  top: 100,
+                  top: 50,
                   left: 165,
                   child: Text(
                     "Cookie",
@@ -45,7 +45,7 @@ class _ShareCookieScreenState extends State<ShareCookieScreen> {
                   ),
                 ),
                 Positioned(
-                  top: 120,
+                  top: 50,
                   child: IconButton(
                     icon: const Icon(
                       Icons.arrow_back,

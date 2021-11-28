@@ -38,6 +38,7 @@ dependencies:
   firebase_core: ^1.8.0
   firebase_auth: ^3.1.4
   cloud_firestore: ^2.5.4
+  page_transition: ^2.0.4
 
 dev_dependencies:
   flutter_test:
@@ -56,13 +57,14 @@ dev_dependencies:
 flutter:
 
   assets:
-    - assets/images/background_loading_screen.png
-    - assets/images/cookie.png
-    - assets/images/blurred_cookie.png
-    - assets/images/background_profile_screen.png
-    - assets/images/little_cookie.png
-    - assets/images/background_buy_cookies_screen.png
-    - assets/images/background_view_prediction_screen.png
+    - assets/images/background_loading_screen.jpg
+    - assets/images/background_profile_screen.jpg
+    - assets/images/little_cookie.jpg
+    - assets/images/background_buy_cookies_screen.jpg
+    - assets/images/cookie_closed.jpg
+    - assets/images/cookie_opened.jpg
+    - assets/images/cookie_gif.gif
+    - assets/images/cookie_video.mp4
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

@@ -1,5 +1,5 @@
 import 'package:cookie/ui/screens/auth_screen.dart';
-import 'package:cookie/ui/screens/user_settings_screen.dart';
+import 'package:cookie/ui/screens/profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,21 +24,21 @@ class _IntroScreenState extends State<IntroScreen> {
 
     result != null
         ? Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder:
-            (context) => UserSettingsScreen(uid: result.uid),),)
-
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProfileScreen(uid: result.uid),
+            ),
+          )
         : Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder:
-            (context) => const AuthScreen(),),);
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AuthScreen(),
+            ),
+          );
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Stack(
         children: [
@@ -46,45 +46,68 @@ class _IntroScreenState extends State<IntroScreen> {
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image:
-                AssetImage("assets/images/background_loading_screen.png"),
+                    AssetImage("assets/images/background_loading_screen.jpg"),
                 fit: BoxFit.cover,
               ),
             ),
           ),
-          Positioned(
-            top: 180,
-            left: 20,
-            child: Text(
-              "Fortune",
-              style: GoogleFonts.vollkornSc(
-                color: Theme.of(context).primaryColor,
-                fontSize: 50,
-                fontWeight: FontWeight.bold,
+          Column(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Stack(
+                  children: [
+                    Positioned(
+                      top: 100,
+                      left: 20,
+                      child: Text(
+                        "Fortune",
+                        style: GoogleFonts.vollkornSc(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 50,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ),
-          Positioned(
-            top: 550,
-            left: 180,
-            child: Text(
-              "Cookie",
-              style: GoogleFonts.vollkornSc(
-                color: Theme.of(context).primaryColor,
-                fontSize: 50,
-                fontWeight: FontWeight.bold,
+              const SizedBox(
+                height: 120,
               ),
-            ),
-          ),
-          Positioned(
-            top: 700,
-            left: 160,
-            child: Text(
-              "LOADING...",
-              style: GoogleFonts.roboto(
-                color: Colors.white,
-                fontSize: 15,
+              Expanded(
+                flex: 1,
+                child: Stack(
+                  children: [
+                    Positioned(
+                      top: 100,
+                      left: 180,
+                      child: Text(
+                        "Cookie",
+                        style: GoogleFonts.vollkornSc(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 50,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
+              const SizedBox(
+                height: 30,
+              ),
+              Expanded(
+                flex: 1,
+                child: Text(
+                  "LOADING...",
+                  style: GoogleFonts.roboto(
+                    color: Colors.white,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),

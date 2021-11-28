@@ -65,7 +65,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         left: 100,
                         child: AnimatedOpacity(
                           opacity: isVisible ? 1.0 : 0.0,
-                          duration: const Duration(milliseconds: 2000),
+                          duration: const Duration(milliseconds: 1000),
                           child: Text(
                             "Fortune",
                             style: GoogleFonts.vollkornSc(
@@ -81,7 +81,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         left: 165,
                         child: AnimatedOpacity(
                           opacity: isVisible ? 1.0 : 0.0,
-                          duration: const Duration(milliseconds: 2000),
+                          duration: const Duration(milliseconds: 1000),
                           child: Text(
                             "Cookie",
                             style: GoogleFonts.vollkornSc(
@@ -96,7 +96,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         top: 50,
                         child: AnimatedOpacity(
                           opacity: isVisible ? 1.0 : 0.0,
-                          duration: const Duration(milliseconds: 2000),
+                          duration: const Duration(milliseconds: 1000),
                           child: IconButton(
                               icon: const Icon(
                                 Icons.format_list_bulleted,
@@ -119,7 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 AnimatedOpacity(
                   opacity: isVisible ? 1.0 : 0.0,
-                  duration: const Duration(milliseconds: 2000),
+                  duration: const Duration(milliseconds: 1000),
                   child: Padding(
                     padding: const EdgeInsets.all(10),
                     child: Row(
@@ -265,7 +265,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             flex: 1,
             child: AnimatedOpacity(
               opacity: isVisible ? 1.0 : 0.0,
-              duration: const Duration(milliseconds: 2000),
+              duration: const Duration(milliseconds: 1000),
               child: Column(
                 children: [
                   TextButton(

@@ -12,13 +12,6 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
-  List<String> listDomains = [
-    '@mail.ru',
-    '@gmail.com',
-    '@yandex.ru',
-    '@iсloud.com',
-    '@yahoo.com',
-  ];
   final _formKeySignUp = GlobalKey<FormState>();
   final _fireStore = FirebaseFirestore.instance;
 
@@ -39,6 +32,7 @@ class _SignUpFormState extends State<SignUpForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      autovalidateMode: AutovalidateMode.always,
       child: SizedBox(
         key: _formKeySignUp,
         height: 100,
@@ -116,6 +110,12 @@ class _SignUpFormState extends State<SignUpForm> {
                     return 'Enter an Email Address';
                   } else if (!value.contains('@')) {
                     return 'Please enter a valid email address';
+                  } else if (!(value.endsWith('@mail.ru') ||
+                      value.endsWith('@gmail.com') ||
+                      value.endsWith('@yandex.ru') ||
+                      value.endsWith('@iсloud.com') ||
+                      value.endsWith('@yahoo.com'))) {
+                    return 'Please enter a suitable domain!';
                   }
                   return null;
                 },
@@ -201,8 +201,12 @@ class _SignUpFormState extends State<SignUpForm> {
             email: emailController.text, password: passwordController.text)
         .then((result) {
       _fireStore.collection('users').doc(result.user!.uid).set({
-        'first_name': firstNameController.text.isNotEmpty ? firstNameController.text : "Empty",
-        'last_name': lastNameController.text.isNotEmpty ? lastNameController.text : "Empty",
+        'first_name': firstNameController.text.isNotEmpty
+            ? firstNameController.text
+            : "Empty",
+        'last_name': lastNameController.text.isNotEmpty
+            ? lastNameController.text
+            : "Empty",
         'uid': result.user!.uid,
         'email': emailController.text,
       }).whenComplete(() {

@@ -11,13 +11,6 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  List<String> listDomains = [
-    '@mail.ru',
-    '@gmail.com',
-    '@yandex.ru',
-    '@iсloud.com',
-    '@yahoo.com',
-  ];
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController emailController = TextEditingController();
@@ -35,6 +28,7 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      autovalidateMode: AutovalidateMode.always,
       child: SizedBox(
         key: _formKey,
         height: 100,
@@ -64,6 +58,12 @@ class _LoginFormState extends State<LoginForm> {
                     return 'Enter Email Address';
                   } else if (!value.contains('@')) {
                     return 'Please enter a valid email address!';
+                  } else if (!(value.endsWith('@mail.ru') ||
+                      value.endsWith('@gmail.com') ||
+                      value.endsWith('@yandex.ru') ||
+                      value.endsWith('@iсloud.com') ||
+                      value.endsWith('@yahoo.com'))) {
+                    return 'Please enter a suitable domain!';
                   }
                   return null;
                 },

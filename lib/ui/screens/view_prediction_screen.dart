@@ -21,7 +21,7 @@ class _ViewPredictionScreenState extends State<ViewPredictionScreen> {
   }
 
   void changeVisibility() async {
-    await Future.delayed(const Duration(milliseconds: 2000), () {});
+    await Future.delayed(const Duration(milliseconds: 1000), () {});
     setState(() {
       isVisible = true;
     });
@@ -44,7 +44,7 @@ class _ViewPredictionScreenState extends State<ViewPredictionScreen> {
                     left: 100,
                     child: AnimatedOpacity(
                       opacity: isVisible ? 1.0 : 0.0,
-                      duration: const Duration(milliseconds: 2000),
+                      duration: const Duration(milliseconds: 1000),
                       child: Text(
                         "Fortune",
                         style: GoogleFonts.vollkornSc(
@@ -60,7 +60,7 @@ class _ViewPredictionScreenState extends State<ViewPredictionScreen> {
                     left: 165,
                     child: AnimatedOpacity(
                       opacity: isVisible ? 1.0 : 0.0,
-                      duration: const Duration(milliseconds: 2000),
+                      duration: const Duration(milliseconds: 1000),
                       child: Text(
                         "Cookie",
                         style: GoogleFonts.vollkornSc(
@@ -94,7 +94,7 @@ class _ViewPredictionScreenState extends State<ViewPredictionScreen> {
             child: Column(children: [
               AnimatedOpacity(
                 opacity: isVisible ? 1.0 : 0.0,
-                duration: const Duration(milliseconds: 2000),
+                duration: const Duration(milliseconds: 1000),
                 child: TextButton(
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all(
@@ -132,7 +132,7 @@ class _ViewPredictionScreenState extends State<ViewPredictionScreen> {
               ),
               AnimatedOpacity(
                 opacity: isVisible ? 1.0 : 0.0,
-                duration: const Duration(milliseconds: 2000),
+                duration: const Duration(milliseconds: 1000),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [

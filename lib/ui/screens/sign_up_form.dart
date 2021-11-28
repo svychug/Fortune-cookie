@@ -199,80 +199,78 @@ class _SignUpFormState extends State<SignUpForm> {
     FirebaseAuth.instance
         .createUserWithEmailAndPassword(
             email: emailController.text, password: passwordController.text)
-        .then(
-      (result) {
-        _fireStore.collection('users').doc(result.user!.uid).set({
-          'first_name': firstNameController.text,
-          'last_name': lastNameController.text,
-          'uid': result.user!.uid,
-          'email': emailController.text,
-        }).then((value) {
-          isLoading = false;
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ProfileScreen(uid: result.user!.uid)),
-          );
-        }).catchError(
-          (err) {
-            showGeneralDialog(
-              barrierLabel: "Label",
-              barrierDismissible: true,
-              barrierColor: Colors.black.withOpacity(0.5),
-              transitionDuration: const Duration(milliseconds: 500),
-              context: context,
-              pageBuilder: (context, anim1, anim2) {
-                return Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    height: 250,
-                    child: AlertDialog(
-                      content: Text(err.message),
-                      actions: [
-                        TextButton(
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.pink),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                              ),
-                            ),
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Text(
-                            "Ok",
-                            style: GoogleFonts.roboto(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w900,
-                              fontSize: 18,
-                            ),
+        .then((result) {
+      _fireStore.collection('users').doc(result.user!.uid).set({
+        'first_name': firstNameController.text.isNotEmpty ? firstNameController.text : "Empty",
+        'last_name': lastNameController.text.isNotEmpty ? lastNameController.text : "Empty",
+        'uid': result.user!.uid,
+        'email': emailController.text,
+      }).whenComplete(() {
+        isLoading = false;
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ProfileScreen(uid: result.user!.uid)),
+        );
+      });
+    }).catchError(
+      (err) {
+        showGeneralDialog(
+          barrierLabel: "Label",
+          barrierDismissible: true,
+          barrierColor: Colors.black.withOpacity(0.5),
+          transitionDuration: const Duration(milliseconds: 500),
+          context: context,
+          pageBuilder: (context, anim1, anim2) {
+            return Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                height: 250,
+                child: AlertDialog(
+                  content: Text(err.message),
+                  actions: [
+                    TextButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.pink),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
                           ),
                         ),
-                      ],
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        "Ok",
+                        style: GoogleFonts.roboto(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 18,
+                        ),
+                      ),
                     ),
-                    margin: const EdgeInsets.only(
-                      left: 12,
-                      right: 12,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(40),
-                    ),
-                  ),
-                );
-              },
-              transitionBuilder: (context, anim1, anim2, child) {
-                return SlideTransition(
-                  position:
-                      Tween(begin: const Offset(0, -1), end: const Offset(0, 0))
-                          .animate(anim1),
-                  child: child,
-                );
-              },
+                  ],
+                ),
+                margin: const EdgeInsets.only(
+                  left: 12,
+                  right: 12,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(40),
+                ),
+              ),
+            );
+          },
+          transitionBuilder: (context, anim1, anim2, child) {
+            return SlideTransition(
+              position:
+                  Tween(begin: const Offset(0, -1), end: const Offset(0, 0))
+                      .animate(anim1),
+              child: child,
             );
           },
         );

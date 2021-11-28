@@ -64,8 +64,6 @@ class _LoginFormState extends State<LoginForm> {
                     return 'Enter Email Address';
                   } else if (!value.contains('@')) {
                     return 'Please enter a valid email address!';
-                  } else if (!listDomains.contains(value.substring(value.indexOf('@'),value.length))){
-                    return 'Please enter a valid email domain';
                   }
                   return null;
                 },
@@ -100,7 +98,7 @@ class _LoginFormState extends State<LoginForm> {
                   if (value!.isEmpty) {
                     return 'Enter Password';
                   } else if (value.length < 6) {
-                    return 'Password must be atleast 6 characters!';
+                    return 'Password must be at least 6 characters!';
                   }
                   return null;
                 },

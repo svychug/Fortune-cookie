@@ -24,7 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       isShowAnimation = true;
       isVisible = false;
     });
-    await Future.delayed(const Duration(milliseconds: 5000), () {});
+    await Future.delayed(const Duration(milliseconds: 4500), () {});
     Navigator.push(
       context,
       PageTransition(
@@ -52,16 +52,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: Column(
         children: [
           Expanded(
-            flex: 1,
+            flex: 2,
             child: Column(
               children: [
                 SizedBox(
-                  height: 100,
+                  height: 130,
                   width: double.infinity,
                   child: Stack(
                     children: [
                       Positioned(
-                        top: 30,
+                        top: 60,
                         left: 100,
                         child: AnimatedOpacity(
                           opacity: isVisible ? 1.0 : 0.0,
@@ -77,7 +77,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                       Positioned(
-                        top: 50,
+                        top: 80,
                         left: 165,
                         child: AnimatedOpacity(
                           opacity: isVisible ? 1.0 : 0.0,
@@ -93,7 +93,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                       Positioned(
-                        top: 50,
+                        top: 80,
                         child: AnimatedOpacity(
                           opacity: isVisible ? 1.0 : 0.0,
                           duration: const Duration(milliseconds: 1000),

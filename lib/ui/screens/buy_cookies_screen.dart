@@ -19,12 +19,12 @@ class _BuyCookiesScreenState extends State<BuyCookiesScreen> {
             child: Column(
               children: [
                 SizedBox(
-                  height: 100,
+                  height: 130,
                   width: double.infinity,
                   child: Stack(
                     children: [
                       Positioned(
-                        top: 30,
+                        top: 60,
                         left: 100,
                         child: Text(
                           "Fortune",
@@ -36,7 +36,7 @@ class _BuyCookiesScreenState extends State<BuyCookiesScreen> {
                         ),
                       ),
                       Positioned(
-                        top: 50,
+                        top: 80,
                         left: 165,
                         child: Text(
                           "Cookie",
@@ -48,7 +48,7 @@ class _BuyCookiesScreenState extends State<BuyCookiesScreen> {
                         ),
                       ),
                       Positioned(
-                        top: 50,
+                        top: 80,
                         child: IconButton(
                           icon: const Icon(
                             Icons.arrow_back,

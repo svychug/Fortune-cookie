@@ -18,46 +18,58 @@ class _BuyCookiesScreenState extends State<BuyCookiesScreen> {
             flex: 2,
             child: Column(
               children: [
+                const SizedBox(
+                  height: 60,
+                ),
                 SizedBox(
-                  height: 130,
+                  height: 55,
                   width: double.infinity,
                   child: Stack(
                     children: [
                       Positioned(
-                        top: 60,
-                        left: 100,
-                        child: Text(
-                          "Fortune",
-                          style: GoogleFonts.vollkornSc(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
+                        top: 15,
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: IconButton(
+                            icon: const Icon(
+                              Icons.arrow_back,
+                              color: Colors.pink,
+                              size: 36,
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
                           ),
                         ),
                       ),
-                      Positioned(
-                        top: 80,
-                        left: 165,
-                        child: Text(
-                          "Cookie",
-                          style: GoogleFonts.vollkornSc(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 35,
-                            fontWeight: FontWeight.bold,
+                      Center(
+                        child: SizedBox(
+                          height: 55,
+                          width: 200,
+                          child: Stack(
+                            children: [
+                              Text(
+                                "Fortune",
+                                style: GoogleFonts.vollkornSc(
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Positioned(
+                                top: 20,
+                                left: 65,
+                                child: Text(
+                                  "Cookie",
+                                  style: GoogleFonts.vollkornSc(
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 35,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ),
-                      Positioned(
-                        top: 80,
-                        child: IconButton(
-                          icon: const Icon(
-                            Icons.arrow_back,
-                            color: Colors.pink,
-                            size: 36,
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
                         ),
                       ),
                     ],
@@ -67,7 +79,7 @@ class _BuyCookiesScreenState extends State<BuyCookiesScreen> {
                   height: 50,
                 ),
                 Column(
-                children: [
+                  children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,

@@ -75,54 +75,69 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
                       flex: 3,
                       child: Column(
                         children: [
+                          const SizedBox(
+                            height: 60,
+                          ),
                           SizedBox(
-                            height: 130,
+                            height: 55,
                             width: double.infinity,
                             child: Stack(
                               children: [
                                 Positioned(
-                                  top: 60,
-                                  left: 100,
-                                  child: Text(
-                                    "Fortune",
-                                    style: GoogleFonts.vollkornSc(
-                                      color: Theme.of(context).primaryColor,
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold,
+                                  top: 15,
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: IconButton(
+                                      icon: const Icon(
+                                        Icons.logout,
+                                        color: Colors.pink,
+                                        size: 36,
+                                      ),
+                                      onPressed: () {
+                                        FirebaseAuth auth =
+                                            FirebaseAuth.instance;
+                                        auth.signOut().then((res) {
+                                          Navigator.pushAndRemoveUntil(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const AuthScreen()),
+                                              (Route<dynamic> route) => false);
+                                        });
+                                      },
                                     ),
                                   ),
                                 ),
-                                Positioned(
-                                  top: 80,
-                                  left: 165,
-                                  child: Text(
-                                    "Cookie",
-                                    style: GoogleFonts.vollkornSc(
-                                      color: Theme.of(context).primaryColor,
-                                      fontSize: 35,
-                                      fontWeight: FontWeight.bold,
+                                Center(
+                                  child: SizedBox(
+                                    height: 55,
+                                    width: 200,
+                                    child: Stack(
+                                      children: [
+                                        Text(
+                                          "Fortune",
+                                          style: GoogleFonts.vollkornSc(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            fontSize: 30,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Positioned(
+                                          top: 20,
+                                          left: 65,
+                                          child: Text(
+                                            "Cookie",
+                                            style: GoogleFonts.vollkornSc(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              fontSize: 35,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                ),
-                                Positioned(
-                                  top: 80,
-                                  child: IconButton(
-                                    icon: const Icon(
-                                      Icons.logout,
-                                      color: Colors.pink,
-                                      size: 36,
-                                    ),
-                                    onPressed: () {
-                                      FirebaseAuth auth = FirebaseAuth.instance;
-                                      auth.signOut().then((res) {
-                                        Navigator.pushAndRemoveUntil(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const AuthScreen()),
-                                            (Route<dynamic> route) => false);
-                                      });
-                                    },
                                   ),
                                 ),
                               ],
@@ -295,33 +310,35 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
                     Expanded(
                       flex: 1,
                       child: Column(
-                        children: [TextButton(
-                          style: ButtonStyle(
-                            padding: MaterialStateProperty.all(
-                              const EdgeInsets.only(
-                                  left: 30, right: 30, top: 20, bottom: 20),
+                        children: [
+                          TextButton(
+                            style: ButtonStyle(
+                              padding: MaterialStateProperty.all(
+                                const EdgeInsets.only(
+                                    left: 30, right: 30, top: 20, bottom: 20),
+                              ),
+                              backgroundColor:
+                                  MaterialStateProperty.all<Color>(Colors.pink),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
                             ),
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.pink),
-                            shape:
-                                MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              "PREDICTION",
+                              style: GoogleFonts.roboto(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 18,
                               ),
                             ),
                           ),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Text(
-                            "PREDICTION",
-                            style: GoogleFonts.roboto(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w900,
-                              fontSize: 18,
-                            ),
-                          ),
-                        ),],
+                        ],
                       ),
                     ),
                   ],

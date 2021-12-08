@@ -17,37 +17,40 @@ class _AuthScreenState extends State<AuthScreen> {
       backgroundColor: Colors.black,
       body: Column(
         children: [
-          SizedBox(
-            height: 130,
-            width: double.infinity,
-            child: Stack(
-              children: [
-                Positioned(
-                  top: 60,
-                  left: 100,
-                  child: Text(
-                    "Fortune",
-                    style: GoogleFonts.vollkornSc(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
+          Column(
+            children: [
+              const SizedBox(
+                height: 60,
+              ),
+              SizedBox(
+                height: 55,
+                width: 200,
+                child: Stack(
+                  children: [
+                    Text(
+                      "Fortune",
+                      style: GoogleFonts.vollkornSc(
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ),
-                Positioned(
-                  top: 80,
-                  left: 165,
-                  child: Text(
-                    "Cookie",
-                    style: GoogleFonts.vollkornSc(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 35,
-                      fontWeight: FontWeight.bold,
+                    Positioned(
+                      top: 20,
+                      left: 65,
+                      child: Text(
+                        "Cookie",
+                        style: GoogleFonts.vollkornSc(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 35,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           Expanded(
             flex:2,

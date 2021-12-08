@@ -1,4 +1,5 @@
 import 'package:cookie/ui/screens/profile_screen.dart';
+import 'package:cookie/ui/screens/reset_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -119,7 +120,11 @@ class _LoginFormState extends State<LoginForm> {
                       ),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => ResetScreen()),
+                    );
+                  },
                   child: Text(
                     "Forgot password?",
                     style: GoogleFonts.roboto(

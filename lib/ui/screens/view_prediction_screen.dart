@@ -528,46 +528,80 @@ class _ViewPredictionScreenState extends State<ViewPredictionScreen> {
       body: Column(
         children: [
           Expanded(
-            flex: 2,
-            child: SizedBox(
-              height: 130,
-              width: double.infinity,
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: 60,
-                    left: 100,
-                    child: AnimatedOpacity(
-                      opacity: isVisible ? 1.0 : 0.0,
-                      duration: const Duration(milliseconds: 1000),
+            flex: 1,
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 60,
+                ),
+                SizedBox(
+                  height: 55,
+                  width: 200,
+                  child: Stack(
+                    children: [
+                      AnimatedOpacity(
+                        opacity: isVisible ? 1.0 : 0.0,
+                        duration: const Duration(milliseconds: 1000),
+                        child: Text(
+                          "Fortune",
+                          style: GoogleFonts.vollkornSc(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 20,
+                        left: 65,
+                        child: AnimatedOpacity(
+                          opacity: isVisible ? 1.0 : 0.0,
+                          duration: const Duration(milliseconds: 1000),
+                          child: Text(
+                            "Cookie",
+                            style: GoogleFonts.vollkornSc(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 35,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Stack(
+              children: [
+                Container(
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/images/popup.png"),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+                AnimatedOpacity(
+                  opacity: isVisible ? 1.0 : 0.0,
+                  duration: const Duration(milliseconds: 1000),
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left:60, right:60),
                       child: Text(
-                        "Fortune",
+                        prediction,
+                        textAlign: TextAlign.center,
                         style: GoogleFonts.vollkornSc(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
+                          fontSize: MediaQuery.of(context).size.width* 0.03,
                         ),
                       ),
                     ),
                   ),
-                  Positioned(
-                    top: 80,
-                    left: 165,
-                    child: AnimatedOpacity(
-                      opacity: isVisible ? 1.0 : 0.0,
-                      duration: const Duration(milliseconds: 1000),
-                      child: Text(
-                        "Cookie",
-                        style: GoogleFonts.vollkornSc(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 35,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           Expanded(
@@ -589,34 +623,18 @@ class _ViewPredictionScreenState extends State<ViewPredictionScreen> {
                     child: RotationTransition(
                       turns: const AlwaysStoppedAnimation(-20 / 360),
                       child: SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.22,
+                        width: MediaQuery.of(context).size.width * 0.20,
                         height: MediaQuery.of(context).size.height * 0.045,
-                        child: Text(prediction,
+                        child: Text(
+                          prediction,
                           style: GoogleFonts.vollkornSc(
-                            fontSize: 5,
+                            fontSize: 4,
                           ),
                         ),
                       ),
                     ),
                   ),
                 ),
-                /*Positioned(
-                  //top:85,
-                  //left:150,
-                  child: RotationTransition(
-                    turns: AlwaysStoppedAnimation(-20 / 360),
-                    child: AnimatedOpacity(
-                      opacity: isVisible ? 1.0 : 0.0,
-                      duration: const Duration(milliseconds: 1000),
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width*0.3,
-                        //height: MediaQuery.of(context).size.height*0.4,
-                        child: Text(
-                            listPredictions[generateRandomPredictions()]),
-                      ),
-                    ),
-                  ),
-                ),*/
               ],
             ),
           ),

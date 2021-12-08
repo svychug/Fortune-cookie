@@ -4,6 +4,7 @@ import 'package:cookie/ui/screens/view_prediction_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String? uid;
@@ -19,6 +20,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool isShowAnimation = false;
   bool isVisible = true;
 
+  static AudioCache player = new AudioCache();
+  static const alarmAudioPath = "images/sound_cookie.mp3";
+
   void changePicture() async {
     setState(() {
       isShowAnimation = true;
@@ -32,6 +36,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: ViewPredictionScreen(uid: widget.uid),
       ),
     );
+  }
+
+  void runSound() async {
+    await Future.delayed(const Duration(milliseconds: 2500), () {});
+    player.play(alarmAudioPath);
   }
 
   @override
@@ -55,63 +64,75 @@ class _ProfileScreenState extends State<ProfileScreen> {
             flex: 2,
             child: Column(
               children: [
+                const SizedBox(
+                  height: 60,
+                ),
                 SizedBox(
-                  height: 130,
+                  height: 55,
                   width: double.infinity,
                   child: Stack(
                     children: [
                       Positioned(
-                        top: 60,
-                        left: 100,
-                        child: AnimatedOpacity(
-                          opacity: isVisible ? 1.0 : 0.0,
-                          duration: const Duration(milliseconds: 1000),
-                          child: Text(
-                            "Fortune",
-                            style: GoogleFonts.vollkornSc(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        top:15,
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: AnimatedOpacity(
+                            opacity: isVisible ? 1.0 : 0.0,
+                            duration: const Duration(milliseconds: 1000),
+                            child: IconButton(
+                                icon: const Icon(
+                                  Icons.format_list_bulleted,
+                                  color: Color(0xFFFEC480),
+                                  size: 40,
+                                ),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          UserSettingsScreen(uid: widget.uid),
+                                    ),
+                                  );
+                                }),
                           ),
                         ),
                       ),
-                      Positioned(
-                        top: 80,
-                        left: 165,
-                        child: AnimatedOpacity(
-                          opacity: isVisible ? 1.0 : 0.0,
-                          duration: const Duration(milliseconds: 1000),
-                          child: Text(
-                            "Cookie",
-                            style: GoogleFonts.vollkornSc(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 35,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: 80,
-                        child: AnimatedOpacity(
-                          opacity: isVisible ? 1.0 : 0.0,
-                          duration: const Duration(milliseconds: 1000),
-                          child: IconButton(
-                              icon: const Icon(
-                                Icons.format_list_bulleted,
-                                color: Color(0xFFFEC480),
-                                size: 40,
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        UserSettingsScreen(uid: widget.uid),
+                      Center(
+                        child: SizedBox(
+                          height: 55,
+                          width: 200,
+                          child: Stack(
+                            children: [
+                              AnimatedOpacity(
+                                opacity: isVisible ? 1.0 : 0.0,
+                                duration: const Duration(milliseconds: 1000),
+                                child: Text(
+                                  "Fortune",
+                                  style: GoogleFonts.vollkornSc(
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                );
-                              }),
+                                ),
+                              ),
+                              Positioned(
+                                top: 20,
+                                left: 65,
+                                child: AnimatedOpacity(
+                                  opacity: isVisible ? 1.0 : 0.0,
+                                  duration: const Duration(milliseconds: 1000),
+                                  child: Text(
+                                    "Cookie",
+                                    style: GoogleFonts.vollkornSc(
+                                      color: Theme.of(context).primaryColor,
+                                      fontSize: 35,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -283,6 +304,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     onPressed: () {
+                      runSound();
                       changePicture();
                       imageGif.evict();
                     },

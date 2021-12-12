@@ -590,12 +590,13 @@ class _ViewPredictionScreenState extends State<ViewPredictionScreen> {
                   duration: const Duration(milliseconds: 1000),
                   child: Center(
                     child: Padding(
-                      padding: const EdgeInsets.only(left:60, right:60),
+                      padding: const EdgeInsets.only(left: 80, right: 55),
                       child: Text(
                         prediction,
                         textAlign: TextAlign.center,
                         style: GoogleFonts.vollkornSc(
-                          fontSize: MediaQuery.of(context).size.width* 0.03,
+                          fontSize: MediaQuery.of(context).size.width * 0.03,
+                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -645,7 +646,7 @@ class _ViewPredictionScreenState extends State<ViewPredictionScreen> {
             flex: 1,
             child: Column(
               children: [
-                AnimatedOpacity(
+                /*AnimatedOpacity(
                   opacity: isVisible ? 1.0 : 0.0,
                   duration: const Duration(milliseconds: 1000),
                   child: TextButton(
@@ -680,7 +681,7 @@ class _ViewPredictionScreenState extends State<ViewPredictionScreen> {
                       ),
                     ),
                   ),
-                ),
+                ),*/
                 const SizedBox(
                   height: 10,
                 ),
@@ -726,7 +727,42 @@ class _ViewPredictionScreenState extends State<ViewPredictionScreen> {
                           ),
                         ),
                       ),
-                      FlatButton(
+                      AnimatedOpacity(
+                        opacity: isVisible ? 1.0 : 0.0,
+                        duration: const Duration(milliseconds: 1000),
+                        child: Container(
+                          width: 150,
+                          child: TextButton(
+                            style: ButtonStyle(
+
+                              padding: MaterialStateProperty.all(
+                                const EdgeInsets.only(
+                                    left: 20, right: 20, top: 20, bottom: 20),
+                              ),
+                              backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.pink),
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                            ),
+                            onPressed: () {
+
+                            },
+                            child: Text(
+                              "SAVE",
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.roboto(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      /*FlatButton(
                         minWidth: 150,
                         color: Colors.black,
                         shape: RoundedRectangleBorder(
@@ -750,7 +786,7 @@ class _ViewPredictionScreenState extends State<ViewPredictionScreen> {
                             ),
                           ),
                         ),
-                      ),
+                      ),*/
                     ],
                   ),
                 ),

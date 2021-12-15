@@ -1,9 +1,13 @@
+import 'dart:async';
 import 'dart:math';
-
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 import 'package:cookie/ui/screens/profile_screen.dart';
-import 'package:cookie/ui/screens/share_cookie_screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 
 class ViewPredictionScreen extends StatefulWidget {
   final String? uid;
@@ -515,6 +519,38 @@ class _ViewPredictionScreenState extends State<ViewPredictionScreen> {
     return randomNumber;
   }
 
+  void saveScreen() async {
+    RenderRepaintBoundary? boundary =
+        scr.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+    if (boundary!.debugNeedsPaint) {
+      Timer(const Duration(seconds: 1), () => saveScreen());
+      return null;
+    }
+    ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+    ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    final result =
+        await ImageGallerySaver.saveImage(byteData!.buffer.asUint8List());
+    if (kDebugMode) {
+      print('$byteData ********** Saved to gallery *********** $result');
+    }
+    _showInSnackBar(message: 'Saved to gallery - full screen');
+  }
+
+  void _showInSnackBar({required String message}) {
+    _scaffoldKey.currentState?.showSnackBar(
+      SnackBar(
+        content: Text(
+          message,
+          style:
+              const TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+        ),
+        duration: (const Duration(seconds: 1)),
+        elevation: 0,
+        backgroundColor: Colors.black,
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -522,126 +558,146 @@ class _ViewPredictionScreenState extends State<ViewPredictionScreen> {
     changeVisibility();
   }
 
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey scr = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: Column(
         children: [
           Expanded(
-            flex: 1,
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 60,
-                ),
-                SizedBox(
-                  height: 55,
-                  width: 200,
-                  child: Stack(
-                    children: [
-                      AnimatedOpacity(
-                        opacity: isVisible ? 1.0 : 0.0,
-                        duration: const Duration(milliseconds: 1000),
-                        child: Text(
-                          "Fortune",
-                          style: GoogleFonts.vollkornSc(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
+            flex: 3,
+            child: RepaintBoundary(
+              key: scr,
+              child: Scaffold(
+               body: Column(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 60,
                           ),
-                        ),
-                      ),
-                      Positioned(
-                        top: 20,
-                        left: 65,
-                        child: AnimatedOpacity(
-                          opacity: isVisible ? 1.0 : 0.0,
-                          duration: const Duration(milliseconds: 1000),
-                          child: Text(
-                            "Cookie",
-                            style: GoogleFonts.vollkornSc(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 35,
-                              fontWeight: FontWeight.bold,
+                          SizedBox(
+                            height: 55,
+                            width: 200,
+                            child: Stack(
+                              children: [
+                                AnimatedOpacity(
+                                  opacity: isVisible ? 1.0 : 0.0,
+                                  duration: const Duration(milliseconds: 1000),
+                                  child: Text(
+                                    "Fortune",
+                                    style: GoogleFonts.vollkornSc(
+                                      color: Theme.of(context).primaryColor,
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 20,
+                                  left: 65,
+                                  child: AnimatedOpacity(
+                                    opacity: isVisible ? 1.0 : 0.0,
+                                    duration: const Duration(milliseconds: 1000),
+                                    child: Text(
+                                      "Cookie",
+                                      style: GoogleFonts.vollkornSc(
+                                        color: Theme.of(context).primaryColor,
+                                        fontSize: 35,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Stack(
-              children: [
-                Container(
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/images/popup.png"),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-                AnimatedOpacity(
-                  opacity: isVisible ? 1.0 : 0.0,
-                  duration: const Duration(milliseconds: 1000),
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 80, right: 55),
-                      child: Text(
-                        prediction,
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.vollkornSc(
-                          fontSize: MediaQuery.of(context).size.width * 0.03,
-                          color: Colors.white,
-                        ),
+                        ],
                       ),
                     ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Stack(
-              children: [
-                Container(
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/images/cookie_opened.jpg"),
-                      fit: BoxFit.fitHeight,
-                    ),
-                  ),
-                ),
-                AnimatedOpacity(
-                  opacity: isVisible ? 1.0 : 0.0,
-                  duration: const Duration(milliseconds: 1000),
-                  child: Center(
-                    child: RotationTransition(
-                      turns: const AlwaysStoppedAnimation(-20 / 360),
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.20,
-                        height: MediaQuery.of(context).size.height * 0.045,
-                        child: Text(
-                          prediction,
-                          style: GoogleFonts.vollkornSc(
-                            fontSize: 4,
+                    Expanded(
+                      flex: 1,
+                      child: Stack(
+                        children: [
+                          Container(
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage("assets/images/popup.png"),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
                           ),
-                        ),
+                          AnimatedOpacity(
+                            opacity: isVisible ? 1.0 : 0.0,
+                            duration: const Duration(milliseconds: 1000),
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 80, right: 55),
+                                child: Text(
+                                  prediction,
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.vollkornSc(
+                                    fontSize:
+                                        MediaQuery.of(context).size.width * 0.03,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
+                    Expanded(
+                      flex:1,
+                      child: Stack(
+                        children: [
+                          Container(
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                image:
+                                    AssetImage("assets/images/cookie_opened.jpg"),
+                                fit: BoxFit.fitHeight,
+                              ),
+                            ),
+                          ),
+                          AnimatedOpacity(
+                            opacity: isVisible ? 1.0 : 0.0,
+                            duration: const Duration(milliseconds: 1000),
+                            child: Center(
+                              child: RotationTransition(
+                                turns: const AlwaysStoppedAnimation(-20 / 360),
+                                child: SizedBox(
+                                  width: MediaQuery.of(context).size.width * 0.18,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.045,
+                                  child: Text(
+                                    prediction,
+                                    style: GoogleFonts.vollkornSc(
+                                      fontSize: 4,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
-          const SizedBox(
-            height: 10,
-          ),
+
           Expanded(
             flex: 1,
             child: Column(
@@ -734,21 +790,21 @@ class _ViewPredictionScreenState extends State<ViewPredictionScreen> {
                           width: 150,
                           child: TextButton(
                             style: ButtonStyle(
-
                               padding: MaterialStateProperty.all(
                                 const EdgeInsets.only(
                                     left: 20, right: 20, top: 20, bottom: 20),
                               ),
                               backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.pink),
-                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  MaterialStateProperty.all<Color>(Colors.pink),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30),
                                 ),
                               ),
                             ),
                             onPressed: () {
-
+                              saveScreen();
                             },
                             child: Text(
                               "SAVE",

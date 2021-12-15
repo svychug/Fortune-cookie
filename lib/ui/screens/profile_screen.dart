@@ -1,10 +1,12 @@
 import 'package:cookie/ui/screens/buy_cookies_screen.dart';
 import 'package:cookie/ui/screens/user_settings_screen.dart';
 import 'package:cookie/ui/screens/view_prediction_screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String? uid;
@@ -43,9 +45,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
     player.play(alarmAudioPath);
   }
 
+  _requestPermission() async {
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.storage,
+    ].request();
+    final info = statuses[Permission.storage].toString();
+    if (kDebugMode) {
+      print(info);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    _requestPermission();
     imageGif = AssetImage("assets/images/cookie_gif.gif");
   }
 

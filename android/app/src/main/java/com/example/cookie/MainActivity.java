@@ -1,4 +1,4 @@
-package com.example.cookie;
+package com.fortune.cookie;
 
 import io.flutter.embedding.android.FlutterActivity;
 

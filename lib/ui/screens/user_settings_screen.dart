@@ -21,6 +21,7 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
   late final String firstName;
   late final String lastName;
   late final String email;
+  late final int cookies;
 
   Future<bool> fetchData() async {
     await FirebaseFirestore.instance
@@ -35,6 +36,7 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
           firstName = map['first_name'];
           lastName = map['last_name'];
           email = map['email'];
+          cookies = map['cookies'];
         });
       }
     });
@@ -192,7 +194,7 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
                                       ),
                                       child: Center(
                                         child: Text(
-                                          "3",
+                                          cookies.toString(),
                                           style: GoogleFonts.roboto(
                                             color: Colors.white,
                                           ),

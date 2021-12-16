@@ -1,3 +1,4 @@
+import 'package:cookie/data/const.dart';
 import 'package:cookie/ui/screens/profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -210,6 +211,7 @@ class _SignUpFormState extends State<SignUpForm> {
             : "Empty",
         'uid': result.user!.uid,
         'email': emailController.text,
+        'cookies': countCookies,
       }).whenComplete(() {
         isLoading = false;
         Navigator.pushReplacement(

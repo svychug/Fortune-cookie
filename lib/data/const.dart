@@ -1,0 +1,1 @@
+const int countCookies = 3;

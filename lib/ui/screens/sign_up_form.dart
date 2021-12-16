@@ -212,6 +212,7 @@ class _SignUpFormState extends State<SignUpForm> {
         'uid': result.user!.uid,
         'email': emailController.text,
         'cookies': countCookies,
+        'open_predictions': startOpenPredictions,
       }).whenComplete(() {
         isLoading = false;
         Navigator.pushReplacement(

@@ -33,7 +33,7 @@ class _ViewPredictionScreenState extends State<ViewPredictionScreen> {
   }
 
   int generateRandomPredictions() {
-    Random random = new Random();
+    Random random = Random();
     int randomNumber = random.nextInt(listPredictions.length);
     return randomNumber;
   }

@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:get/get.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String? uid;
@@ -23,7 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool isVisible = true;
 
   static AudioCache player = new AudioCache();
-  static const alarmAudioPath = "images/sound_cookie.mp3";
+  static const alarmAudioPath = "audio/sound_cookie.mp3";
 
   void changePicture() async {
     setState(() {
@@ -59,7 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     _requestPermission();
-    imageGif = AssetImage("assets/images/cookie_gif.gif");
+    imageGif = const AssetImage("assets/images/cookie_gif.gif");
   }
 
   @override
@@ -120,7 +121,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 opacity: isVisible ? 1.0 : 0.0,
                                 duration: const Duration(milliseconds: 1000),
                                 child: Text(
-                                  "Fortune",
+                                  'fortune'.tr,
                                   style: GoogleFonts.vollkornSc(
                                     color: Theme.of(context).primaryColor,
                                     fontSize: 30,
@@ -135,7 +136,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   opacity: isVisible ? 1.0 : 0.0,
                                   duration: const Duration(milliseconds: 1000),
                                   child: Text(
-                                    "Cookie",
+                                    'cookie'.tr,
                                     style: GoogleFonts.vollkornSc(
                                       color: Theme.of(context).primaryColor,
                                       fontSize: 35,
@@ -165,21 +166,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Row(
                                 children: [
                                   Text(
-                                    "free cookie:",
+                                    'free_cookie'.tr,
                                     style: GoogleFonts.roboto(
                                       color: Colors.pink,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 18,
+                                      fontSize: 14,
                                     ),
                                   ),
                                   const SizedBox(
                                     width: 5,
                                   ),
                                   Text(
-                                    "12ч:10м:53c",
+                                    'time'.tr,
                                     style: GoogleFonts.roboto(
                                       color: const Color(0xFFFEC480),
-                                      fontSize: 16,
+                                      fontSize: 12,
                                     ),
                                   ),
                                 ],
@@ -187,11 +188,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              Align(
+                              const Align(
                                 alignment: Alignment.centerLeft,
-                                child: Container(
+                                child: SizedBox(
                                   width: 200,
-                                  child: const LinearProgressIndicator(
+                                  child: LinearProgressIndicator(
                                     minHeight: 7,
                                     value: 0.5,
                                     valueColor: AlwaysStoppedAnimation<Color>(
@@ -260,10 +261,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 );
                               },
                               child: Text(
-                                "+ ADD",
+                                'add'.tr,
                                 style: GoogleFonts.roboto(
                                   color: Colors.white,
-                                  fontSize: 18,
+                                  fontSize: 14,
                                 ),
                               ),
                             ),
@@ -322,7 +323,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       imageGif.evict();
                     },
                     child: Text(
-                      "VIEW \nPREDICTION",
+                      'view_prediction'.tr,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.roboto(
                         color: Colors.white,

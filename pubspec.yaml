@@ -42,6 +42,7 @@ dependencies:
   audioplayers: ^0.20.1
   permission_handler: ^8.3.0
   image_gallery_saver: ^1.7.1
+  get: ^4.6.1
 
 dev_dependencies:
   flutter_test:
@@ -67,9 +68,9 @@ flutter:
     - assets/images/cookie_closed.jpg
     - assets/images/cookie_opened.jpg
     - assets/images/cookie_gif.gif
-    - assets/images/cookie_video.mp4
+    - assets/video/cookie_video.mp4
     - assets/images/popup.png
-    - assets/images/sound_cookie.mp3
+    - assets/audio/sound_cookie.mp3
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

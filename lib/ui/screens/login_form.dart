@@ -3,6 +3,7 @@ import 'package:cookie/ui/screens/reset_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -48,7 +49,7 @@ class _LoginFormState extends State<LoginForm> {
                     borderSide: BorderSide(color: Colors.white),
                   ),
                   border: const UnderlineInputBorder(),
-                  labelText: 'EMAIL',
+                  labelText: 'email'.tr,
                   labelStyle: GoogleFonts.roboto(
                     color: Colors.white,
                     fontSize: 18,
@@ -56,15 +57,15 @@ class _LoginFormState extends State<LoginForm> {
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Enter Email Address';
+                    return 'enter_email'.tr;
                   } else if (!value.contains('@')) {
-                    return 'Please enter a valid email address!';
+                    return 'enter_valid_email'.tr;
                   } else if (!(value.endsWith('@mail.ru') ||
                       value.endsWith('@gmail.com') ||
                       value.endsWith('@yandex.ru') ||
                       value.endsWith('@iсloud.com') ||
                       value.endsWith('@yahoo.com'))) {
-                    return 'Please enter a suitable domain!';
+                    return 'enter_domain'.tr;
                   }
                   return null;
                 },
@@ -80,9 +81,9 @@ class _LoginFormState extends State<LoginForm> {
                     borderSide: BorderSide(color: Colors.white),
                   ),
                   border: const UnderlineInputBorder(),
-                  labelText: 'PASSWORD',
+                  labelText: 'password'.tr,
                   hintStyle: const TextStyle(color: Colors.white),
-                  hintText: 'Password is at least 6 characters',
+                  hintText: 'password_6'.tr,
                   labelStyle: GoogleFonts.roboto(
                     color: Colors.white,
                     fontSize: 18,
@@ -97,9 +98,9 @@ class _LoginFormState extends State<LoginForm> {
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Enter Password';
+                    return 'enter_password'.tr;
                   } else if (value.length < 6) {
-                    return 'Password must be at least 6 characters!';
+                    return 'password_6'.tr;
                   }
                   return null;
                 },
@@ -126,7 +127,7 @@ class _LoginFormState extends State<LoginForm> {
                     );
                   },
                   child: Text(
-                    "Forgot password?",
+                    'forgot_pass'.tr,
                     style: GoogleFonts.roboto(
                       color: Colors.pink,
                       fontSize: 18,
@@ -156,7 +157,7 @@ class _LoginFormState extends State<LoginForm> {
                             logInToFirebase();
                           },
                           child: Text(
-                            "LOGIN",
+                            'login'.tr,
                             style: GoogleFonts.roboto(
                               color: Colors.white,
                               fontWeight: FontWeight.w900,
@@ -215,7 +216,7 @@ class _LoginFormState extends State<LoginForm> {
                         Navigator.of(context).pop();
                       },
                       child: Text(
-                        "Ok",
+                        'ok'.tr,
                         style: GoogleFonts.roboto(
                           color: Colors.white,
                           fontWeight: FontWeight.w900,

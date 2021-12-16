@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get.dart';
 
 class BuyCookiesScreen extends StatefulWidget {
   const BuyCookiesScreen({Key? key}) : super(key: key);
@@ -49,7 +50,7 @@ class _BuyCookiesScreenState extends State<BuyCookiesScreen> {
                           child: Stack(
                             children: [
                               Text(
-                                "Fortune",
+                                'fortune'.tr,
                                 style: GoogleFonts.vollkornSc(
                                   color: Theme.of(context).primaryColor,
                                   fontSize: 30,
@@ -60,7 +61,7 @@ class _BuyCookiesScreenState extends State<BuyCookiesScreen> {
                                 top: 20,
                                 left: 65,
                                 child: Text(
-                                  "Cookie",
+                                  'cookie'.tr,
                                   style: GoogleFonts.vollkornSc(
                                     color: Theme.of(context).primaryColor,
                                     fontSize: 35,

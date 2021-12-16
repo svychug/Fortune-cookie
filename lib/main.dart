@@ -2,6 +2,9 @@ import 'package:cookie/ui/screens/intro_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:get/get.dart';
+
+import 'localization/locale_string.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +17,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
+      translations: LocaleString(),
+      locale: const Locale('en','US'),
       debugShowCheckedModeBanner: false,
       title: 'Fortune Cookie',
       theme: ThemeData(

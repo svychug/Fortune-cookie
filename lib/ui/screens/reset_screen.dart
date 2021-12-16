@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 
 class ResetScreen extends StatefulWidget {
+  const ResetScreen({Key? key}) : super(key: key);
+
   @override
   _ResetScreenState createState() => _ResetScreenState();
 }
@@ -14,16 +16,17 @@ class _ResetScreenState extends State<ResetScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Reset Password'),),
+      appBar: AppBar(
+        backgroundColor: Colors.pink,
+        title: const Text('Reset Password'),
+      ),
       body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               keyboardType: TextInputType.emailAddress,
-              decoration: const InputDecoration(
-                  hintText: 'Email'
-              ),
+              decoration: const InputDecoration(hintText: 'Email'),
               onChanged: (value) {
                 setState(() {
                   _email = value.trim();
@@ -34,19 +37,33 @@ class _ResetScreenState extends State<ResetScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              RaisedButton(
-                child: const Text('Send Request'),
+              TextButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.pink),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                    ),
+                  ),
+                ),
                 onPressed: () {
                   auth.sendPasswordResetEmail(email: _email);
                   Navigator.of(context).pop();
                 },
-                color: Theme.of(context).accentColor,
+                child: Text(
+                  "Send Request",
+                  style: GoogleFonts.roboto(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 18,
+                  ),
+                ),
               ),
-
             ],
           ),
-
-        ],),
+        ],
+      ),
     );
   }
 }

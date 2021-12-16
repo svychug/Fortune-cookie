@@ -23,7 +23,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool isVisible = true;
 
   static AudioCache player = new AudioCache();
-  static const alarmAudioPath = "images/sound_cookie.mp3";
+  static const alarmAudioPath = "audio/sound_cookie.mp3";
 
   void changePicture() async {
     setState(() {
@@ -59,7 +59,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     _requestPermission();
-    imageGif = AssetImage("assets/images/cookie_gif.gif");
+    imageGif = const AssetImage("assets/images/cookie_gif.gif");
   }
 
   @override

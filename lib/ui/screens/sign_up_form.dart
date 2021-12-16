@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({Key? key}) : super(key: key);
@@ -51,7 +52,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     borderSide: BorderSide(color: Colors.white),
                   ),
                   border: const UnderlineInputBorder(),
-                  labelText: 'FIRST NAME',
+                  labelText: 'first_name'.tr,
                   labelStyle: GoogleFonts.roboto(
                     color: Colors.white,
                     fontSize: 18,
@@ -59,7 +60,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Enter First Name';
+                    return 'enter_fn'.tr;
                   }
                   return null;
                 },
@@ -75,7 +76,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     borderSide: BorderSide(color: Colors.white),
                   ),
                   border: const UnderlineInputBorder(),
-                  labelText: 'LAST NAME',
+                  labelText: 'last_name'.tr,
                   labelStyle: GoogleFonts.roboto(
                     color: Colors.white,
                     fontSize: 18,
@@ -83,7 +84,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Enter Last Name';
+                    return 'enter_ln'.tr;
                   }
                   return null;
                 },
@@ -99,7 +100,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     borderSide: BorderSide(color: Colors.white),
                   ),
                   border: const UnderlineInputBorder(),
-                  labelText: 'EMAIL',
+                  labelText: 'email'.tr,
                   labelStyle: GoogleFonts.roboto(
                     color: Colors.white,
                     fontSize: 18,
@@ -107,15 +108,15 @@ class _SignUpFormState extends State<SignUpForm> {
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Enter an Email Address';
+                    return 'enter_email'.tr;
                   } else if (!value.contains('@')) {
-                    return 'Please enter a valid email address';
+                    return 'enter_valid_email'.tr;
                   } else if (!(value.endsWith('@mail.ru') ||
                       value.endsWith('@gmail.com') ||
                       value.endsWith('@yandex.ru') ||
                       value.endsWith('@iсloud.com') ||
                       value.endsWith('@yahoo.com'))) {
-                    return 'Please enter a suitable domain!';
+                    return 'enter_domain'.tr;
                   }
                   return null;
                 },
@@ -131,9 +132,9 @@ class _SignUpFormState extends State<SignUpForm> {
                     borderSide: BorderSide(color: Colors.white),
                   ),
                   border: const UnderlineInputBorder(),
-                  labelText: 'PASSWORD',
+                  labelText: 'password'.tr,
                   hintStyle: const TextStyle(color: Colors.white),
-                  hintText: 'Password is at least 6 characters',
+                  hintText: 'password_6'.tr,
                   labelStyle: GoogleFonts.roboto(
                     color: Colors.white,
                     fontSize: 18,
@@ -148,9 +149,9 @@ class _SignUpFormState extends State<SignUpForm> {
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Enter Password';
+                    return 'enter_password'.tr;
                   } else if (value.length < 6) {
-                    return 'Password must be at least 6 characters!';
+                    return 'password_6'.tr;
                   }
                   return null;
                 },
@@ -178,7 +179,7 @@ class _SignUpFormState extends State<SignUpForm> {
                             registerToFirebase();
                           },
                           child: Text(
-                            "SIGN UP",
+                            'signup'.tr,
                             style: GoogleFonts.roboto(
                               color: Colors.white,
                               fontWeight: FontWeight.w900,
@@ -248,7 +249,7 @@ class _SignUpFormState extends State<SignUpForm> {
                         Navigator.of(context).pop();
                       },
                       child: Text(
-                        "Ok",
+                        'ok'.tr,
                         style: GoogleFonts.roboto(
                           color: Colors.white,
                           fontWeight: FontWeight.w900,

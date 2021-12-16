@@ -3,8 +3,8 @@ import 'package:cookie/ui/screens/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'buy_cookies_screen.dart';
+import 'package:get/get.dart';
 
 class UserSettingsScreen extends StatefulWidget {
   final String? uid;
@@ -115,7 +115,7 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
                                     child: Stack(
                                       children: [
                                         Text(
-                                          "Fortune",
+                                          'fortune'.tr,
                                           style: GoogleFonts.vollkornSc(
                                             color:
                                                 Theme.of(context).primaryColor,
@@ -127,7 +127,7 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
                                           top: 20,
                                           left: 65,
                                           child: Text(
-                                            "Cookie",
+                                            'cookie'.tr,
                                             style: GoogleFonts.vollkornSc(
                                               color: Theme.of(context)
                                                   .primaryColor,
@@ -231,7 +231,7 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
                                 Row(
                                   children: [
                                     Text(
-                                      "Open predictions:",
+                                      'open_predictions'.tr,
                                       style: GoogleFonts.roboto(
                                         fontSize: 16,
                                       ),
@@ -291,10 +291,10 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
                                     );
                                   },
                                   child: Text(
-                                    "+ ADD",
+                                    'add'.tr,
                                     style: GoogleFonts.roboto(
                                       color: Colors.white,
-                                      fontSize: 18,
+                                      fontSize: 14,
                                     ),
                                   ),
                                 ),
@@ -330,7 +330,7 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
                               Navigator.of(context).pop();
                             },
                             child: Text(
-                              "PREDICTION",
+                              'prediction'.tr,
                               style: GoogleFonts.roboto(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w900,

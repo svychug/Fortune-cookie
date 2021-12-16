@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get.dart';
 
 class ResetScreen extends StatefulWidget {
   const ResetScreen({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class _ResetScreenState extends State<ResetScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.pink,
-        title: const Text('Reset Password'),
+        title: Text('reset_pass'.tr),
       ),
       body: Column(
         children: [
@@ -26,7 +27,7 @@ class _ResetScreenState extends State<ResetScreen> {
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               keyboardType: TextInputType.emailAddress,
-              decoration: const InputDecoration(hintText: 'Email'),
+              decoration: InputDecoration(hintText: 'email'.tr),
               onChanged: (value) {
                 setState(() {
                   _email = value.trim();
@@ -52,7 +53,7 @@ class _ResetScreenState extends State<ResetScreen> {
                   Navigator.of(context).pop();
                 },
                 child: Text(
-                  "Send Request",
+                  'send_req'.tr,
                   style: GoogleFonts.roboto(
                     color: Colors.white,
                     fontWeight: FontWeight.w900,

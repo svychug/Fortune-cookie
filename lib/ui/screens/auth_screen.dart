@@ -13,7 +13,6 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-
   final List locale = [
     {'name': 'ENGLISH', 'locale': const Locale('en', 'US')},
     {'name': 'РУССКИЙ', 'locale': const Locale('ru', 'RU')},
@@ -71,11 +70,6 @@ class _AuthScreenState extends State<AuthScreen> {
               const SizedBox(
                 height: 60,
               ),
-              ElevatedButton(
-                  onPressed: () {
-                    buildLanguageDialog(context);
-                  },
-                  child: Text('change-lang'.tr)),
               SizedBox(
                 height: 55,
                 width: 200,
@@ -105,6 +99,30 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
               ),
             ],
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          TextButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(Colors.pink),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18.0),
+                ),
+              ),
+            ),
+            onPressed: () {
+              buildLanguageDialog(context);
+            },
+            child: Text(
+              'change_lang'.tr,
+              style: GoogleFonts.roboto(
+                color: Colors.white,
+                fontWeight: FontWeight.w900,
+                fontSize: 18,
+              ),
+            ),
           ),
           Expanded(
             flex: 2,

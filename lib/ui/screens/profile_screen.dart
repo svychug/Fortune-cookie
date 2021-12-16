@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -23,12 +22,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late AssetImage imageGif;
   bool isShowAnimation = false;
   bool isVisible = true;
+  late bool _isButtonDisabled;
 
   static AudioCache player = new AudioCache();
   static const alarmAudioPath = "audio/sound_cookie.mp3";
 
   late Future<bool> _webCall;
   late final int cookies;
+  late final int openPredictions;
+
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+  Future<void> updateUser() {
+    return users.doc(widget.uid!).update({
+      'cookies': cookies - 1,
+      'open_predictions': openPredictions + 1,
+    }).then((value) {
+      if (kDebugMode) {
+        print("User Updated");
+      }
+    }).catchError((error) {
+      if (kDebugMode) {
+        print("Failed to update user: $error");
+      }
+    });
+  }
 
   Future<bool> fetchData() async {
     await FirebaseFirestore.instance
@@ -38,9 +56,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         final Map<String, dynamic> map =
-            documentSnapshot.data() as Map<String, dynamic>;
+        documentSnapshot.data() as Map<String, dynamic>;
         setState(() {
           cookies = map['cookies'];
+          openPredictions = map['open_predictions'];
         });
       }
     });
@@ -67,22 +86,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     player.play(alarmAudioPath);
   }
 
-  _requestPermission() async {
-    Map<Permission, PermissionStatus> statuses = await [
-      Permission.storage,
-    ].request();
-    final info = statuses[Permission.storage].toString();
-    if (kDebugMode) {
-      print(info);
-    }
+  void checkButton() {
+    cookies == 0 ? _isButtonDisabled = true : _isButtonDisabled = false;
   }
 
   @override
   void initState() {
     super.initState();
-    _webCall = fetchData();
     imageGif = const AssetImage("assets/images/cookie_gif.gif");
-    _requestPermission();
+    _webCall = fetchData().whenComplete(() => checkButton());
   }
 
   @override
@@ -151,11 +163,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     AnimatedOpacity(
                                       opacity: isVisible ? 1.0 : 0.0,
                                       duration:
-                                          const Duration(milliseconds: 1000),
+                                      const Duration(milliseconds: 1000),
                                       child: Text(
                                         'fortune'.tr,
                                         style: GoogleFonts.vollkornSc(
-                                          color: Theme.of(context).primaryColor,
+                                          color: Theme
+                                              .of(context)
+                                              .primaryColor,
                                           fontSize: 30,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -167,12 +181,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       child: AnimatedOpacity(
                                         opacity: isVisible ? 1.0 : 0.0,
                                         duration:
-                                            const Duration(milliseconds: 1000),
+                                        const Duration(milliseconds: 1000),
                                         child: Text(
                                           'cookie'.tr,
                                           style: GoogleFonts.vollkornSc(
                                             color:
-                                                Theme.of(context).primaryColor,
+                                            Theme
+                                                .of(context)
+                                                .primaryColor,
                                             fontSize: 35,
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -230,8 +246,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           minHeight: 7,
                                           value: 0.5,
                                           valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                                  Colors.pink),
+                                          AlwaysStoppedAnimation<Color>(
+                                              Colors.pink),
                                           backgroundColor: Colors.grey,
                                         ),
                                       ),
@@ -278,13 +294,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   TextButton(
                                     style: ButtonStyle(
                                       backgroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                              Colors.pink),
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.pink),
                                       shape: MaterialStateProperty.all<
                                           RoundedRectangleBorder>(
                                         RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(18.0),
+                                          BorderRadius.circular(18.0),
                                         ),
                                       ),
                                     ),
@@ -319,14 +335,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     decoration: BoxDecoration(
                       image: !isShowAnimation
                           ? const DecorationImage(
-                              image:
-                                  AssetImage("assets/images/cookie_closed.jpg"),
-                              fit: BoxFit.scaleDown,
-                            )
+                        image:
+                        AssetImage("assets/images/cookie_closed.jpg"),
+                        fit: BoxFit.scaleDown,
+                      )
                           : DecorationImage(
-                              image: imageGif,
-                              fit: BoxFit.scaleDown,
-                            ),
+                        image: imageGif,
+                        fit: BoxFit.scaleDown,
+                      ),
                     ),
                   ),
                 ),
@@ -347,7 +363,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   left: 30, right: 30, top: 10, bottom: 10),
                             ),
                             backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.pink),
+                            MaterialStateProperty.all<Color>(Colors.pink),
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(
                               RoundedRectangleBorder(
@@ -355,10 +371,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             ),
                           ),
-                          onPressed: () {
+                          onPressed: _isButtonDisabled ? null : () {
                             runSound();
                             changePicture();
                             imageGif.evict();
+                            updateUser();
                           },
                           child: Text(
                             'view_prediction'.tr,

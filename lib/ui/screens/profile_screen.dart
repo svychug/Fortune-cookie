@@ -24,7 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool isVisible = true;
   late bool _isButtonDisabled;
 
-  static AudioCache player = new AudioCache();
+  static AudioCache player = AudioCache();
   static const alarmAudioPath = "audio/sound_cookie.mp3";
 
   late Future<bool> _webCall;

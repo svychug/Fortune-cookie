@@ -8,6 +8,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:get/get.dart';
+//import 'package:intl/intl.dart';
+//import 'package:timeago/timeago.dart' as timeago;
 
 class ProfileScreen extends StatefulWidget {
   final String? uid;
@@ -19,19 +21,62 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  late AssetImage imageGif;
   bool isShowAnimation = false;
   bool isVisible = true;
+
+  late AssetImage imageGif;
   late bool _isButtonDisabled;
 
   static AudioCache player = AudioCache();
   static const alarmAudioPath = "audio/sound_cookie.mp3";
 
   late Future<bool> _webCall;
-  late final int cookies;
-  late final int openPredictions;
+  late int cookies;
+  late int openPredictions;
+  late DateTime freeCookie;
+  late Duration difference;
+  late bool timer;
 
   CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+  void checkDifferenceInTime() {
+    DateTime _now = DateTime.now();
+    difference = _now.difference(freeCookie);
+
+    if (_now.isAfter(freeCookie.add(const Duration(hours:24))) && timer == true)  {
+      updateUserCookies();
+    }
+  }
+
+  Future<void> updateTimeStampForZero() {
+    return users.doc(widget.uid!).update({
+      'free_cookie_timer': Timestamp.now(),
+      'timer':true,
+    }).then((value) {
+      if (kDebugMode) {
+        print("User Updated");
+      }
+    }).catchError((error) {
+      if (kDebugMode) {
+        print("Failed to update user: $error");
+      }
+    });
+  }
+
+  Future<void> updateUserCookies() {
+    return users.doc(widget.uid!).update({
+      'cookies': cookies + 1,
+      'timer': false,
+    }).then((value) {
+      if (kDebugMode) {
+        print("User Updated");
+      }
+    }).catchError((error) {
+      if (kDebugMode) {
+        print("Failed to update user: $error");
+      }
+    });
+  }
 
   Future<void> updateUser() {
     return users.doc(widget.uid!).update({
@@ -56,10 +101,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         final Map<String, dynamic> map =
-        documentSnapshot.data() as Map<String, dynamic>;
+            documentSnapshot.data() as Map<String, dynamic>;
         setState(() {
           cookies = map['cookies'];
           openPredictions = map['open_predictions'];
+          freeCookie = map['free_cookie_timer'].toDate();
+          timer = map['timer'];
         });
       }
     });
@@ -87,14 +134,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void checkButton() {
-    cookies == 0 ? _isButtonDisabled = true : _isButtonDisabled = false;
+    cookies == 0 ? {_isButtonDisabled = true} : {_isButtonDisabled = false};
   }
 
   @override
   void initState() {
     super.initState();
     imageGif = const AssetImage("assets/images/cookie_gif.gif");
-    _webCall = fetchData().whenComplete(() => checkButton());
+    _webCall = fetchData().whenComplete(() => checkDifferenceInTime())
+        .whenComplete(() => fetchData())
+        .whenComplete(() => checkButton());
   }
 
   @override
@@ -163,13 +212,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     AnimatedOpacity(
                                       opacity: isVisible ? 1.0 : 0.0,
                                       duration:
-                                      const Duration(milliseconds: 1000),
+                                          const Duration(milliseconds: 1000),
                                       child: Text(
                                         'fortune'.tr,
                                         style: GoogleFonts.vollkornSc(
-                                          color: Theme
-                                              .of(context)
-                                              .primaryColor,
+                                          color: Theme.of(context).primaryColor,
                                           fontSize: 30,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -181,14 +228,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       child: AnimatedOpacity(
                                         opacity: isVisible ? 1.0 : 0.0,
                                         duration:
-                                        const Duration(milliseconds: 1000),
+                                            const Duration(milliseconds: 1000),
                                         child: Text(
                                           'cookie'.tr,
                                           style: GoogleFonts.vollkornSc(
                                             color:
-                                            Theme
-                                                .of(context)
-                                                .primaryColor,
+                                                Theme.of(context).primaryColor,
                                             fontSize: 35,
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -227,7 +272,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           width: 5,
                                         ),
                                         Text(
-                                          'time'.tr,
+                                          _isButtonDisabled
+                                              ? difference.inHours.toString() +
+                                                  'h'.tr +
+                                                  ':' +
+                                                  (difference -
+                                                          Duration(
+                                                              hours: difference
+                                                                  .inHours))
+                                                      .inMinutes
+                                                      .toString() +
+                                                  'm'.tr +
+                                                  ':' +
+                                                  (difference -
+                                                          Duration(
+                                                              hours: difference
+                                                                  .inHours,
+                                                              minutes: (difference -
+                                                                      Duration(
+                                                                          hours: difference
+                                                                              .inHours))
+                                                                  .inMinutes))
+                                                      .inSeconds
+                                                      .toString() +
+                                                  's'.tr
+                                              : '24' +
+                                                  'h'.tr +
+                                                  ':00' +
+                                                  'm'.tr +
+                                                  ':00' +
+                                                  's'.tr,
                                           style: GoogleFonts.roboto(
                                             color: const Color(0xFFFEC480),
                                             fontSize: 12,
@@ -246,8 +320,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           minHeight: 7,
                                           value: 0.5,
                                           valueColor:
-                                          AlwaysStoppedAnimation<Color>(
-                                              Colors.pink),
+                                              AlwaysStoppedAnimation<Color>(
+                                                  Colors.pink),
                                           backgroundColor: Colors.grey,
                                         ),
                                       ),
@@ -294,13 +368,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   TextButton(
                                     style: ButtonStyle(
                                       backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          Colors.pink),
+                                          MaterialStateProperty.all<Color>(
+                                              Colors.pink),
                                       shape: MaterialStateProperty.all<
                                           RoundedRectangleBorder>(
                                         RoundedRectangleBorder(
                                           borderRadius:
-                                          BorderRadius.circular(18.0),
+                                              BorderRadius.circular(18.0),
                                         ),
                                       ),
                                     ),
@@ -335,14 +409,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     decoration: BoxDecoration(
                       image: !isShowAnimation
                           ? const DecorationImage(
-                        image:
-                        AssetImage("assets/images/cookie_closed.jpg"),
-                        fit: BoxFit.scaleDown,
-                      )
+                              image:
+                                  AssetImage("assets/images/cookie_closed.jpg"),
+                              fit: BoxFit.scaleDown,
+                            )
                           : DecorationImage(
-                        image: imageGif,
-                        fit: BoxFit.scaleDown,
-                      ),
+                              image: imageGif,
+                              fit: BoxFit.scaleDown,
+                            ),
                     ),
                   ),
                 ),
@@ -363,7 +437,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   left: 30, right: 30, top: 10, bottom: 10),
                             ),
                             backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.pink),
+                                MaterialStateProperty.all<Color>(Colors.pink),
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(
                               RoundedRectangleBorder(
@@ -371,12 +445,82 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             ),
                           ),
-                          onPressed: _isButtonDisabled ? null : () {
-                            runSound();
-                            changePicture();
-                            imageGif.evict();
-                            updateUser();
-                          },
+                          onPressed: _isButtonDisabled
+                              ? () {
+                                  showGeneralDialog(
+                                    barrierLabel: "Label",
+                                    barrierDismissible: true,
+                                    barrierColor: Colors.black.withOpacity(0.5),
+                                    transitionDuration:
+                                        const Duration(milliseconds: 500),
+                                    context: context,
+                                    pageBuilder: (context, anim1, anim2) {
+                                      return Align(
+                                        alignment: Alignment.topCenter,
+                                        child: Container(
+                                          height: 250,
+                                          child: AlertDialog(
+                                            content: Text('zero_cookies'.tr),
+                                            actions: [
+                                              TextButton(
+                                                style: ButtonStyle(
+                                                  backgroundColor:
+                                                      MaterialStateProperty.all<
+                                                          Color>(Colors.pink),
+                                                  shape:
+                                                      MaterialStateProperty.all<
+                                                          RoundedRectangleBorder>(
+                                                    RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              18.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: Text(
+                                                  'ok'.tr,
+                                                  style: GoogleFonts.roboto(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w900,
+                                                    fontSize: 18,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          margin: const EdgeInsets.only(
+                                            left: 12,
+                                            right: 12,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    transitionBuilder:
+                                        (context, anim1, anim2, child) {
+                                      return SlideTransition(
+                                        position: Tween(
+                                                begin: const Offset(0, -1),
+                                                end: const Offset(0, 0))
+                                            .animate(anim1),
+                                        child: child,
+                                      );
+                                    },
+                                  );
+                                }
+                              : () {
+                                  runSound();
+                                  changePicture();
+                                  imageGif.evict();
+                                  updateUser().whenComplete(() {
+                                    cookies = cookies - 1;
+                                    if (cookies == 0) {
+                                      updateTimeStampForZero();
+                                    }
+                                  });
+                                },
                           child: Text(
                             'view_prediction'.tr,
                             textAlign: TextAlign.center,

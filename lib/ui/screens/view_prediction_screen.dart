@@ -11,7 +11,6 @@ import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:get/get.dart';
-//import 'package:timeago/timeago.dart' as timeago;
 
 class ViewPredictionScreen extends StatefulWidget {
   final String? uid;

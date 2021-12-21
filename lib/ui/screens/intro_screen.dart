@@ -3,6 +3,7 @@ import 'package:cookie/ui/screens/profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get.dart';
 
 class IntroScreen extends StatefulWidget {
   const IntroScreen({Key? key}) : super(key: key);
@@ -61,7 +62,7 @@ class _IntroScreenState extends State<IntroScreen> {
                       top: 100,
                       left: 20,
                       child: Text(
-                        "Fortune",
+                        'fortune'.tr,
                         style: GoogleFonts.vollkornSc(
                           color: Theme.of(context).primaryColor,
                           fontSize: 50,
@@ -83,7 +84,7 @@ class _IntroScreenState extends State<IntroScreen> {
                       top: 100,
                       left: 180,
                       child: Text(
-                        "Cookie",
+                        'cookie'.tr,
                         style: GoogleFonts.vollkornSc(
                           color: Theme.of(context).primaryColor,
                           fontSize: 50,
@@ -100,7 +101,7 @@ class _IntroScreenState extends State<IntroScreen> {
               Expanded(
                 flex: 1,
                 child: Text(
-                  "LOADING...",
+                  'loading'.tr,
                   style: GoogleFonts.roboto(
                     color: Colors.white,
                     fontSize: 15,

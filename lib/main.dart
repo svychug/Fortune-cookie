@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       translations: LocaleString(),
-      locale: const Locale('en','US'),
+      locale: const Locale('ru','RU'),
       debugShowCheckedModeBanner: false,
       title: 'Fortune Cookie',
       theme: ThemeData(

@@ -214,7 +214,8 @@ class _SignUpFormState extends State<SignUpForm> {
         'cookies': countCookies,
         'open_predictions': startOpenPredictions,
         'array_excluded_predictions': [],
-        'free_cookie_timer': null,
+        'free_cookie_timer': Timestamp.now(),
+        'timer': false,
       }).whenComplete(() {
         isLoading = false;
         Navigator.pushReplacement(

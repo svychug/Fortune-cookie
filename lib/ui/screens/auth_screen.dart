@@ -103,7 +103,27 @@ class _AuthScreenState extends State<AuthScreen> {
           const SizedBox(
             height: 10,
           ),
-          TextButton(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                icon: Image.asset('assets/images/russia.png'),
+                iconSize: 30,
+                onPressed: () {
+                  updateLanguage(locale[1]['locale']);
+                },
+              ),
+              IconButton(
+                icon: Image.asset('assets/images/united-kingdom.png'),
+                iconSize: 30,
+                onPressed: () {
+                  updateLanguage(locale[0]['locale']);
+                },
+              ),
+            ],
+          ),
+
+          /*TextButton(
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all<Color>(Colors.pink),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -123,7 +143,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 fontSize: 18,
               ),
             ),
-          ),
+          ),*/
           Expanded(
             flex: 2,
             child: DefaultTabController(

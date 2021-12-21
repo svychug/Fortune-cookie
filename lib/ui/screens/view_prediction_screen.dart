@@ -122,11 +122,11 @@ class _ViewPredictionScreenState extends State<ViewPredictionScreen> {
   void saveScreen() async {
     RenderRepaintBoundary? boundary =
         scr.currentContext?.findRenderObject() as RenderRepaintBoundary?;
-    if (boundary!.debugNeedsPaint) {
+    /*if (boundary!.debugNeedsPaint) {
       Timer(const Duration(seconds: 1), () => saveScreen());
       return null;
-    }
-    ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+    }*/
+    ui.Image image = await boundary!.toImage(pixelRatio: 3.0);
     ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
     final result =
         await ImageGallerySaver.saveImage(byteData!.buffer.asUint8List());

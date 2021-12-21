@@ -71,6 +71,8 @@ flutter:
     - assets/video/cookie_video.mp4
     - assets/images/popup.png
     - assets/audio/sound_cookie.mp3
+    - assets/images/russia.png
+    - assets/images/united-kingdom.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

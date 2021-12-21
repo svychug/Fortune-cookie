@@ -26,7 +26,6 @@ class LocaleString extends Translations{
       'free_cookie':'free cookie:',
       'add':'+ ADD',
       'view_prediction':'VIEW \nPREDICTION',
-      'time':'12h:10m:53s',
       'reset_pass':'Reset Password',
       'send_req':'Send Request',
       'enter_fn':'Enter First Name',
@@ -36,6 +35,11 @@ class LocaleString extends Translations{
       'saved_scr':'Saved to gallery!',
       'back':'GO BACK',
       'save':'SAVE',
+      'zero_cookies': 'You have run out of cookies, wait 24 hours or buy more cookies!',
+      'loading':'LOADING...',
+      'h':'h',
+      'm':'m',
+      's':'s',
     },
     //RUSSIAN LANGUAGE
     'ru_RU':{
@@ -59,7 +63,6 @@ class LocaleString extends Translations{
       'free_cookie':'бесплатное печенье:',
       'add':'+ ДОБАВИТЬ',
       'view_prediction':'СМОТРЕТЬ \nПРЕДСКАЗАНИЕ',
-      'time':'12ч:10м:53c',
       'reset_pass':'Сбросить Пароль',
       'send_req':'Отправить Запрос',
       'enter_fn':'Введите Имя',
@@ -69,6 +72,11 @@ class LocaleString extends Translations{
       'saved_scr':'Сохранено в галерее!',
       'back':'НАЗАД',
       'save':'СОХРАНИТЬ',
+      'zero_cookies': 'Ваш остаток печенек закончился, подождите 24 часа или докупите печенье!',
+      'loading':'ЗАГРУЗКА...',
+      'h':'ч',
+      'm':'м',
+      's':'с',
     },
   };
 

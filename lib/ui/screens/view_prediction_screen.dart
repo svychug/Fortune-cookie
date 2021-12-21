@@ -28,7 +28,8 @@ class _ViewPredictionScreenState extends State<ViewPredictionScreen> {
   late Future<bool> _webCall;
   late String prediction;
   late List<dynamic> excludedPredictions;
-  late int randomNumber;
+  late int randomNumberCount;
+  late int lengthPredictions;
 
   List<int> excludedPredictionsNumber = [];
 
@@ -37,6 +38,23 @@ class _ViewPredictionScreenState extends State<ViewPredictionScreen> {
     setState(() {
       isVisible = true;
     });
+  }
+
+  Future<bool> fetchLengthPredictions() async {
+    await FirebaseFirestore.instance
+        .collection('predictions')
+        .doc('67CXLD94k02MWGzK79k8')
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        final Map<String, dynamic> map =
+            documentSnapshot.data() as Map<String, dynamic>;
+        setState(() {
+          lengthPredictions = map['predictions'].length;
+        });
+      }
+    });
+    return true;
   }
 
   Future<bool> fetchExcludedPredictions() async {
@@ -97,7 +115,8 @@ class _ViewPredictionScreenState extends State<ViewPredictionScreen> {
     countPredictions
         .removeWhere((element) => excludedPredictionsNumber.contains(element));
     Random random = Random();
-    randomNumber = random.nextInt(countPredictions.length);
+    int randomNumber = random.nextInt(countPredictions.length);
+    randomNumberCount = countPredictions[randomNumber];
     return countPredictions[randomNumber];
   }
 
@@ -147,26 +166,30 @@ class _ViewPredictionScreenState extends State<ViewPredictionScreen> {
   @override
   void initState() {
     super.initState();
-    _webCall = fetchExcludedPredictions().whenComplete(
-      () {
-        checkExcludedPredictions();
-        for (var element in excludedPredictions) {
-          excludedPredictionsNumber.add(element['number']);
-        }
-      },
-    ).whenComplete(
-      () => fetchPrediction().whenComplete(
-        () {
+    _webCall = fetchLengthPredictions()
+        .whenComplete(() => fetchExcludedPredictions())
+        .whenComplete(() {
+          checkExcludedPredictions();
+          for (var element in excludedPredictions) {
+            excludedPredictionsNumber.add(element['number']);
+          }
+        })
+        .whenComplete(() {
+          if (excludedPredictions.length == lengthPredictions) {
+            excludedPredictions = [];
+            excludedPredictionsNumber = [];
+          }
+        })
+        .whenComplete(() => fetchPrediction())
+        .whenComplete(() {
           Map<String, dynamic> map = {
             'date': Timestamp.fromDate(DateTime.now()),
-            'number': randomNumber,
+            'number': randomNumberCount,
           };
           excludedPredictions.add(map);
           updateExcludedPredictions();
-        },
-      ),
-    );
-    changeVisibility();
+        })
+        .whenComplete(() => changeVisibility());
   }
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();

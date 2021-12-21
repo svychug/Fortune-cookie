@@ -290,7 +290,7 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(builder: (context) {
-                                        return const BuyCookiesScreen();
+                                        return BuyCookiesScreen(uid: widget.uid);
                                       }),
                                     );
                                   },

@@ -1,13 +1,17 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cookie/ui/screens/buy_cookies_screen.dart';
 import 'package:cookie/ui/screens/user_settings_screen.dart';
 import 'package:cookie/ui/screens/view_prediction_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:get/get.dart';
+
 //import 'package:intl/intl.dart';
 //import 'package:timeago/timeago.dart' as timeago;
 
@@ -30,6 +34,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   static AudioCache player = AudioCache();
   static const alarmAudioPath = "audio/sound_cookie.mp3";
 
+  late Timer _timer;
+  late int _start;
+
   late Future<bool> _webCall;
   late int cookies;
   late int openPredictions;
@@ -39,11 +46,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   CollectionReference users = FirebaseFirestore.instance.collection('users');
 
+  void startTimer() {
+    const oneSec = Duration(seconds: 1);
+    _timer = Timer.periodic(
+      oneSec,
+      (Timer timer) {
+        if (_start == 0) {
+          fetchData()
+              .whenComplete(() => checkDifferenceInTime())
+              .whenComplete(() => fetchData())
+              .whenComplete(() => checkButton());
+          setState(() {
+            timer.cancel();
+          });
+        } else {
+          setState(() {
+            _start--;
+          });
+        }
+      },
+    );
+  }
+
+  String _printDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    return "${twoDigits(duration.inHours) + 'h'.tr}:${twoDigitMinutes + 'm'.tr}:${twoDigitSeconds + 's'.tr}";
+  }
+
   void checkDifferenceInTime() {
     DateTime _now = DateTime.now();
+    DateTime _end = freeCookie.add(const Duration(hours: 24));
     difference = _now.difference(freeCookie);
 
-    if (_now.isAfter(freeCookie.add(const Duration(hours:24))) && timer == true)  {
+    _start = _end.millisecondsSinceEpoch ~/ Duration.millisecondsPerSecond -
+        _now.millisecondsSinceEpoch ~/
+            Duration
+                .millisecondsPerSecond; //(_end.millisecondsSinceEpoch ~/ Duration.millisecondsPerSecond) - _now.millisecondsSinceEpoch ~/ Duration.millisecondsPerSecond;
+
+    if (_now.isAfter(_end) && timer == true) {
       updateUserCookies();
     }
   }
@@ -51,7 +93,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Future<void> updateTimeStampForZero() {
     return users.doc(widget.uid!).update({
       'free_cookie_timer': Timestamp.now(),
-      'timer':true,
+      'timer': true,
     }).then((value) {
       if (kDebugMode) {
         print("User Updated");
@@ -140,8 +182,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
+    startTimer();
     imageGif = const AssetImage("assets/images/cookie_gif.gif");
-    _webCall = fetchData().whenComplete(() => checkDifferenceInTime())
+    _webCall = fetchData()
+        .whenComplete(() => checkDifferenceInTime())
         .whenComplete(() => fetchData())
         .whenComplete(() => checkButton());
   }
@@ -149,6 +193,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void dispose() {
     imageGif.evict();
+    _timer.cancel();
     super.dispose();
   }
 
@@ -273,29 +318,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                         Text(
                                           _isButtonDisabled
-                                              ? difference.inHours.toString() +
-                                                  'h'.tr +
-                                                  ':' +
-                                                  (difference -
-                                                          Duration(
-                                                              hours: difference
-                                                                  .inHours))
-                                                      .inMinutes
-                                                      .toString() +
-                                                  'm'.tr +
-                                                  ':' +
-                                                  (difference -
-                                                          Duration(
-                                                              hours: difference
-                                                                  .inHours,
-                                                              minutes: (difference -
-                                                                      Duration(
-                                                                          hours: difference
-                                                                              .inHours))
-                                                                  .inMinutes))
-                                                      .inSeconds
-                                                      .toString() +
-                                                  's'.tr
+                                              ? _printDuration(
+                                                  Duration(seconds: _start))
                                               : '24' +
                                                   'h'.tr +
                                                   ':00' +
@@ -312,16 +336,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     const SizedBox(
                                       height: 10,
                                     ),
-                                    const Align(
+                                    Align(
                                       alignment: Alignment.centerLeft,
                                       child: SizedBox(
                                         width: 200,
                                         child: LinearProgressIndicator(
                                           minHeight: 7,
-                                          value: 0.5,
+                                          value: _isButtonDisabled ?  _start/86400: 1.0,
                                           valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                                  Colors.pink),
+                                              const AlwaysStoppedAnimation<
+                                                  Color>(Colors.pink),
                                           backgroundColor: Colors.grey,
                                         ),
                                       ),

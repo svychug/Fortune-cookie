@@ -206,7 +206,7 @@ packages:
     source: hosted
     version: "1.7.1"
   intl:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: intl
       url: "https://pub.dartlang.org"
@@ -371,13 +371,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.3"
-  timeago:
-    dependency: "direct main"
-    description:
-      name: timeago
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.1.0"
   typed_data:
     dependency: transitive
     description:

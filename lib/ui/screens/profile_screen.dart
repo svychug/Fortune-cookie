@@ -24,7 +24,7 @@ class ProfileScreen extends StatefulWidget {
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends State<ProfileScreen> with WidgetsBindingObserver{
   bool isShowAnimation = false;
   bool isVisible = true;
 
@@ -181,6 +181,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void initState() {
+    WidgetsBinding.instance?.addObserver(this);
     super.initState();
     startTimer();
     imageGif = const AssetImage("assets/images/cookie_gif.gif");
@@ -192,11 +193,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance?.removeObserver(this);
     imageGif.evict();
     _timer.cancel();
     super.dispose();
   }
 
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      fetchData()
+          .whenComplete(() => checkDifferenceInTime())
+          .whenComplete(() => fetchData())
+          .whenComplete(() => checkButton());
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

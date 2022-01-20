@@ -24,7 +24,8 @@ class ProfileScreen extends StatefulWidget {
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> with WidgetsBindingObserver{
+class _ProfileScreenState extends State<ProfileScreen>
+    with WidgetsBindingObserver {
   bool isShowAnimation = false;
   bool isVisible = true;
 
@@ -208,6 +209,7 @@ class _ProfileScreenState extends State<ProfileScreen> with WidgetsBindingObserv
           .whenComplete(() => checkButton());
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -353,7 +355,9 @@ class _ProfileScreenState extends State<ProfileScreen> with WidgetsBindingObserv
                                         width: 200,
                                         child: LinearProgressIndicator(
                                           minHeight: 7,
-                                          value: _isButtonDisabled ?  _start/86400: 1.0,
+                                          value: _isButtonDisabled
+                                              ? _start / 86400
+                                              : 1.0,
                                           valueColor:
                                               const AlwaysStoppedAnimation<
                                                   Color>(Colors.pink),
@@ -417,7 +421,8 @@ class _ProfileScreenState extends State<ProfileScreen> with WidgetsBindingObserv
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(builder: (context) {
-                                          return BuyCookiesScreen(uid: widget.uid);
+                                          return BuyCookiesScreen(
+                                              uid: widget.uid);
                                         }),
                                       );
                                     },

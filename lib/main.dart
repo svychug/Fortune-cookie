@@ -5,17 +5,20 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
-
 import 'localization/locale_string.dart';
+import 'api/purchase_api.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await PurchaseApi.init();
+
   await Firebase.initializeApp();
   _requestPermission();
   runApp(const MyApp());
 }
 
-_requestPermission() async {
+void _requestPermission() async {
   Map<Permission, PermissionStatus> statuses = await [
     Permission.storage,
   ].request();
@@ -32,7 +35,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       translations: LocaleString(),
-      locale: const Locale('ru','RU'),
+      locale: const Locale('ru', 'RU'),
       debugShowCheckedModeBanner: false,
       title: 'Fortune Cookie',
       theme: ThemeData(
@@ -43,7 +46,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.pink,
       ),
       home: const IntroScreen(),
-          //LoadingScreen(),
+      //LoadingScreen(),
     );
   }
 }

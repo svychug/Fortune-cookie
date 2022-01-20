@@ -146,8 +146,8 @@ class _LoginFormState extends State<LoginForm> {
                           style: ButtonStyle(
                             backgroundColor:
                                 MaterialStateProperty.all<Color>(Colors.pink),
-                            shape:
-                                MaterialStateProperty.all<RoundedRectangleBorder>(
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18.0),
                               ),
@@ -204,9 +204,9 @@ class _LoginFormState extends State<LoginForm> {
                     TextButton(
                       style: ButtonStyle(
                         backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.pink),
+                            MaterialStateProperty.all<Color>(Colors.pink),
                         shape:
-                        MaterialStateProperty.all<RoundedRectangleBorder>(
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18.0),
                           ),
@@ -226,7 +226,10 @@ class _LoginFormState extends State<LoginForm> {
                     ),
                   ],
                 ),
-                margin: const EdgeInsets.only(left: 12, right: 12,),
+                margin: const EdgeInsets.only(
+                  left: 12,
+                  right: 12,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.black,
                   borderRadius: BorderRadius.circular(40),
@@ -236,7 +239,9 @@ class _LoginFormState extends State<LoginForm> {
           },
           transitionBuilder: (context, anim1, anim2, child) {
             return SlideTransition(
-              position: Tween(begin: const Offset(0, -1), end: const Offset(0, 0)).animate(anim1),
+              position:
+                  Tween(begin: const Offset(0, -1), end: const Offset(0, 0))
+                      .animate(anim1),
               child: child,
             );
           },

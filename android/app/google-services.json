@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:444385613142:android:f19616e96351fa6a4572f7",
         "android_client_info": {
-          "package_name": "com.fortune.cookie"
+          "package_name": "com.fortune.cookieapp"
         }
       },
       "oauth_client": [
@@ -34,7 +34,7 @@
               "client_id": "444385613142-f4l8ir4tg3sd0oqp4sf7ttp097mlns50.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.fortune.cookie"
+                "bundle_id": "com.fortune.cookieapp"
               }
             }
           ]

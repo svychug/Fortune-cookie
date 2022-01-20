@@ -24,7 +24,8 @@ class ProfileScreen extends StatefulWidget {
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends State<ProfileScreen>
+    with WidgetsBindingObserver {
   bool isShowAnimation = false;
   bool isVisible = true;
 
@@ -181,6 +182,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void initState() {
+    WidgetsBinding.instance?.addObserver(this);
     super.initState();
     startTimer();
     imageGif = const AssetImage("assets/images/cookie_gif.gif");
@@ -192,9 +194,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance?.removeObserver(this);
     imageGif.evict();
     _timer.cancel();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      fetchData()
+          .whenComplete(() => checkDifferenceInTime())
+          .whenComplete(() => fetchData())
+          .whenComplete(() => checkButton());
+    }
   }
 
   @override
@@ -342,7 +355,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         width: 200,
                                         child: LinearProgressIndicator(
                                           minHeight: 7,
-                                          value: _isButtonDisabled ?  _start/86400: 1.0,
+                                          value: _isButtonDisabled
+                                              ? _start / 86400
+                                              : 1.0,
                                           valueColor:
                                               const AlwaysStoppedAnimation<
                                                   Color>(Colors.pink),
@@ -406,7 +421,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(builder: (context) {
-                                          return BuyCookiesScreen(uid: widget.uid);
+                                          return BuyCookiesScreen(
+                                              uid: widget.uid);
                                         }),
                                       );
                                     },

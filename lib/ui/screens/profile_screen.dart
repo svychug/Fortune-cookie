@@ -6,14 +6,10 @@ import 'package:cookie/ui/screens/user_settings_screen.dart';
 import 'package:cookie/ui/screens/view_prediction_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:get/get.dart';
-
-//import 'package:intl/intl.dart';
-//import 'package:timeago/timeago.dart' as timeago;
 
 class ProfileScreen extends StatefulWidget {
   final String? uid;
@@ -30,7 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   bool isVisible = true;
 
   late AssetImage imageGif;
-  late bool _isButtonDisabled;
+  bool _isButtonDisabled = false;
 
   static AudioCache player = AudioCache();
   static const alarmAudioPath = "audio/sound_cookie.mp3";
